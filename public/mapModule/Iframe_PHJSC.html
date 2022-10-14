@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>平湖驾驶舱 - iframe</title>
+    <!-- WEB -->
+    <script type="text/javascript" src="./plugin/web/jquery/jquery.min.js"></script>
+    <link href="./plugin/web/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="./plugin/web/bootstrap/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        /*图层列表*/
+        #toolbar {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            width: 250px;
+            text-align: center;
+            z-index: 99999;
+            border-radius: 4px;
+        }
+
+        .checkbox input {
+            left: 24px;
+        }
+		
+		#toolbar1 {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			width: 260px;
+			text-align: center;
+			z-index: 9999;
+			border-radius: 4px;
+		}
+
+    </style>
+    <script type="text/javascript">
+        if (window.addEventListener) {
+            //为window注册message事件并绑定监听函数
+            window.addEventListener('message', receiveMsg, false);
+        } else {
+            window.attachEvent('message', receiveMsg);
+        }
+        //监听函数，接收一个参数--Event事件对象
+        function receiveMsg (e) {
+            let obj = e.data;
+            // 地图交互消息监听
+            if (obj.type == "gisMapMessage") {
+                if (obj.data.key == "initInfo" && obj.data.value) {
+                    // initType为true时，map初始化成功
+                    console.log("initInfo交互---地图加载完成", obj.data.value.initType);
+
+                    // 此监听内执行地图打点交互，只执行一次
+                    // 前端需在此请求点数据，用与子页面进行消息交互
+                    // 传递参数对象，包含 "BJX","WSNB"，两类数据，单条数据除"longitude_84"，"latitude_84"经纬度为必须字段，可设置任意展示字段，标识点击时默认都会返回到前端
+                    // 示例数据
+                    let pointsObj = {
+                        "BJX": [{ "corporate_name": "", "longitude_84": 121.0140031, "latitude_84": 30.71346456 }, { "corporate_name": "", "longitude_84": 121.1145618, "latitude_84": 30.78507286 }, { "corporate_name": "嘉兴九龙生态农场有限公司", "longitude_84": 121.1063832, "latitude_84": 30.63531062 }, { "corporate_name": "平湖市恒青田农业开发有限公司", "longitude_84": 120.9584986, "latitude_84": 30.68273672 }, { "corporate_name": "家庭农场", "longitude_84": 121.0061181, "latitude_84": 30.63231641 }, { "corporate_name": "平湖市忠明家庭农场", "longitude_84": 120.9770628, "latitude_84": 30.6310205 }, { "corporate_name": "平湖市曹桥街道积丰家庭农场", "longitude_84": 120.9712879, "latitude_84": 30.65414189 }, { "corporate_name": "平湖市碧园家庭农场", "longitude_84": 120.969887, "latitude_84": 30.64889913 }, { "corporate_name": "平湖市曹桥街道隆鑫家庭农场", "longitude_84": 120.9515843, "latitude_84": 30.63816134 }, { "corporate_name": "平湖市福鑫综合农场", "longitude_84": 121.0387951, "latitude_84": 30.62055553 }, { "corporate_name": "平湖市景绿杜瓜专业合作社", "longitude_84": 120.9943066, "latitude_84": 30.6907518 }, { "corporate_name": "平湖市独山港镇小魏家庭农场", "longitude_84": 121.1493679, "latitude_84": 30.67118388 }, { "corporate_name": "平湖市丰收粮油专业合作社", "longitude_84": 121.2524938, "latitude_84": 30.73843745 }, { "corporate_name": "平湖市独山港镇惠龙家庭农场", "longitude_84": 121.2333531, "latitude_84": 30.74856955 }, { "corporate_name": "平湖市独山港镇卫兵家庭农场", "longitude_84": 121.1498678, "latitude_84": 30.68445857 }, { "corporate_name": "平湖市独山港镇佳良家庭农场", "longitude_84": 121.1589781, "latitude_84": 30.71341909 }, { "corporate_name": "平湖市独山港镇袁开方家庭农场", "longitude_84": 121.1592035, "latitude_84": 30.71342851 }, { "corporate_name": "嘉兴市龙嘉苑休闲农庄有限公司", "longitude_84": 121.0451093, "latitude_84": 30.72400793 }, { "corporate_name": "平湖市独山港镇兴会家庭农场", "longitude_84": 121.1592035, "latitude_84": 30.71342851 }, { "corporate_name": "平湖市任家家庭农场", "longitude_84": 121.1591935, "latitude_84": 30.71342849 }, { "corporate_name": "粮食，蔬菜", "longitude_84": 121.118388, "latitude_84": 30.71629817 }, { "corporate_name": "盛诗科", "longitude_84": 121.1601092, "latitude_84": 30.6674511 }, { "corporate_name": "平湖市士飞家庭农场", "longitude_84": 121.1592035, "latitude_84": 30.71342851 }, { "corporate_name": "平湖市丰裕家庭农场", "longitude_84": 121.1324964, "latitude_84": 30.70566347 }, { "corporate_name": "平湖市大鑫粮油专业合作社", "longitude_84": 121.1275008, "latitude_84": 30.68983339 }, { "corporate_name": "平湖市日晟农产品专业合作社", "longitude_84": 121.1214134, "latitude_84": 30.69007407 }, { "corporate_name": "平湖市广陈镇枪篱头枪篱头家庭农场", "longitude_84": 121.0674392, "latitude_84": 30.72201916 }, { "corporate_name": "平湖市独山港镇范氏家庭农场", "longitude_84": 121.255053, "latitude_84": 30.73365607 }, { "corporate_name": "平湖市华凰果蔬专业合作社", "longitude_84": 121.1852052, "latitude_84": 30.72804335 }, { "corporate_name": "平湖市华健蘑菇专业合作社", "longitude_84": 121.1403101, "latitude_84": 30.69055956 }, { "corporate_name": "平湖市广陈镇雨豪家庭农场", "longitude_84": 121.0773244, "latitude_84": 30.74893695 }, { "corporate_name": "平湖市广陈镇徐彦花家庭农场", "longitude_84": 121.0107515, "latitude_84": 30.67951945 }, { "corporate_name": "平湖市浩民家庭农场", "longitude_84": 121.1591935, "latitude_84": 30.71342849 }, { "corporate_name": "平湖市广陈镇发现生态家庭农场", "longitude_84": 121.0850726, "latitude_84": 30.7543318 }, { "corporate_name": "平湖市云飞蜜蜂授粉专业合作社", "longitude_84": 121.130452, "latitude_84": 30.72276417 }, { "corporate_name": "平湖市振农粮食专业合作社", "longitude_84": 121.1385911, "latitude_84": 30.64479781 }, { "corporate_name": "平湖市独山港镇晓东家庭农场", "longitude_84": 121.1063785, "latitude_84": 30.72589419 }, { "corporate_name": "平湖市独山港镇顾林根家庭农场", "longitude_84": 121.1417033, "latitude_84": 30.68108829 }, { "corporate_name": "平湖市独山港镇照云家庭农场", "longitude_84": 121.1336397, "latitude_84": 30.63914582 }, { "corporate_name": "平湖市缘绿生态农业科技园", "longitude_84": 121.074275, "latitude_84": 30.80398484 }, { "corporate_name": "个体工商户", "longitude_84": 121.2553745, "latitude_84": 30.7140408 }, { "corporate_name": "平湖市曹桥供销专业合作社", "longitude_84": 120.9685294, "latitude_84": 30.675098 }, { "corporate_name": "平湖市新埭镇大志家庭农场", "longitude_84": 121.0633648, "latitude_84": 30.81753348 }, { "corporate_name": "廿四节气家庭农场", "longitude_84": 121.1092375, "latitude_84": 30.81400496 }, { "corporate_name": "平湖市七一浆果家庭农场", "longitude_84": 121.1313543, "latitude_84": 30.71057846 }, { "corporate_name": "平湖市妙农家庭农场", "longitude_84": 121.07968, "latitude_84": 30.70270964 }, { "corporate_name": "平湖市鑫森粮油专业合作社", "longitude_84": 121.134924, "latitude_84": 30.65890096 }, { "corporate_name": "平湖市新埭镇杨泖家庭农场", "longitude_84": 121.0711716, "latitude_84": 30.83159432 }, { "corporate_name": "平湖市广陈镇三红粮食专业合作社", "longitude_84": 121.0887769, "latitude_84": 30.74009607 }, { "corporate_name": "平湖市广陈镇戴建平家庭农场", "longitude_84": 121.1388879, "latitude_84": 30.74728903 }, { "corporate_name": "平湖市丰绿家庭农场有限公司", "longitude_84": 121.1296724, "latitude_84": 30.75224702 }, { "corporate_name": "平湖市三丰果蔬专业合作社", "longitude_84": 121.1214922, "latitude_84": 30.82306261 }, { "corporate_name": "平湖市金港果蔬专业合作社", "longitude_84": 121.0012801, "latitude_84": 30.70084071 }, { "corporate_name": "平湖市广陈镇汤氏家庭农场", "longitude_84": 121.0745154, "latitude_84": 30.77266567 }, { "corporate_name": "平湖市前港粮油专业合作社", "longitude_84": 121.1255597, "latitude_84": 30.73189824 }, { "corporate_name": "平湖市广陈镇四良水产养殖场", "longitude_84": 121.0745154, "latitude_84": 30.77266567 }, { "corporate_name": "平湖市广陈镇糖糖家庭农场", "longitude_84": 121.1153088, "latitude_84": 30.73319181 }, { "corporate_name": "平湖市广陈镇凯磊家庭农场", "longitude_84": 121.0993543, "latitude_84": 30.7523029 }, { "corporate_name": "平湖市广陈镇星之园家庭农场", "longitude_84": 121.072169, "latitude_84": 30.76353868 }, { "corporate_name": "新埭镇盛龙果蔬园艺场", "longitude_84": 121.0765989, "latitude_84": 30.82134127 }, { "corporate_name": "平湖市新埭镇鱼汇家庭生态农场", "longitude_84": 121.0968229, "latitude_84": 30.76674281 }, { "corporate_name": "平湖市新埭镇金仓农场", "longitude_84": 121.0452645, "latitude_84": 30.77657723 }, { "corporate_name": "平湖市中舟果蔬专业合作社", "longitude_84": 121.0417494, "latitude_84": 30.78054463 }, { "corporate_name": "平湖市新埭镇鲜果园家庭农场", "longitude_84": 121.0765979, "latitude_84": 30.82134127 }, { "corporate_name": "平湖市晨晨家庭农场", "longitude_84": 121.0743143, "latitude_84": 30.7883164 }, { "corporate_name": "平湖市新埭镇小姑妈家庭农场", "longitude_84": 121.0743143, "latitude_84": 30.7883164 }, { "corporate_name": "平湖市姚浜水果专业合作社", "longitude_84": 121.1141053, "latitude_84": 30.82118855 }, { "corporate_name": "平湖市独山港镇新健家庭农场", "longitude_84": 121.1336381, "latitude_84": 30.65805847 }, { "corporate_name": "平湖市新埭镇农伯乐家庭农场", "longitude_84": 121.0743143, "latitude_84": 30.7883164 }, { "corporate_name": "平湖市新埭镇林忠家庭农场", "longitude_84": 121.073415, "latitude_84": 30.79227904 }, { "corporate_name": "平湖市新埭镇良友果蔬产业园", "longitude_84": 121.0733648, "latitude_84": 30.7955533 }, { "corporate_name": "平湖市渔丰家庭农场", "longitude_84": 121.064414, "latitude_84": 30.79384919 }, { "corporate_name": "平湖市林弟家庭农场", "longitude_84": 121.0676642, "latitude_84": 30.80072739 }, { "corporate_name": "平湖市新埭镇居杰家庭农场", "longitude_84": 121.0954215, "latitude_84": 30.7836416 }, { "corporate_name": "平湖市新埭镇曹玉良家庭农场", "longitude_84": 121.0772455, "latitude_84": 30.77116029 }, { "corporate_name": "平湖市俞其观家庭农场", "longitude_84": 121.0948171, "latitude_84": 30.76635183 }, { "corporate_name": "平湖市新埭镇建丰农场", "longitude_84": 121.1115909, "latitude_84": 30.79279231 }, { "corporate_name": "平湖市广陈镇陈健家庭农场", "longitude_84": 121.0887799, "latitude_84": 30.74009407 }, { "corporate_name": "平湖市萃贞水厂养殖场", "longitude_84": 121.0452645, "latitude_84": 30.77657723 }, { "corporate_name": "平湖市仙乔家庭农场", "longitude_84": 121.0937067, "latitude_84": 30.65472767 }, { "corporate_name": "平湖市林埭镇伟东家庭农场", "longitude_84": 121.1106669, "latitude_84": 30.6555104 }, { "corporate_name": "平湖市华丰蜜蜂授粉专业合作社", "longitude_84": 121.0910329, "latitude_84": 30.70687437 }, { "corporate_name": "桃林生态农庄有限公司", "longitude_84": 121.1000845, "latitude_84": 30.65722543 }, { "corporate_name": "华星农场", "longitude_84": 120.0368914, "latitude_84": 30.18328895 }, { "corporate_name": "平湖市结义农庄", "longitude_84": 121.0853358, "latitude_84": 30.65573378 }, { "corporate_name": "平湖市林埭镇老刘养蜂场", "longitude_84": 121.0889841, "latitude_84": 30.65446628 }, { "corporate_name": "平湖市一代特种水产养殖基地（普通合伙）", "longitude_84": 121.0622291, "latitude_84": 30.70759405 }, { "corporate_name": "平湖市林埭镇建海蜂场", "longitude_84": 121.0731643, "latitude_84": 30.68675236 }, { "corporate_name": "平湖市初升果蔬家庭农场", "longitude_84": 121.0911125, "latitude_84": 30.66378073 }, { "corporate_name": "养殖销售淡水产", "longitude_84": 121.0954599, "latitude_84": 30.68556054 }, { "corporate_name": "平湖市双丰粮油专业合作社", "longitude_84": 121.1452468, "latitude_84": 30.65434242 }, { "corporate_name": "平湖市永中农机专业合作社", "longitude_84": 121.1491829, "latitude_84": 30.65532676 }, { "corporate_name": "平湖市李云根家庭农场", "longitude_84": 121.0957202, "latitude_84": 30.79861645 }, { "corporate_name": "平湖市清丰粮油专业合作社", "longitude_84": 121.1423831, "latitude_84": 30.69775546 }, { "corporate_name": "平湖市独山港镇忠灵家庭农场", "longitude_84": 121.1458578, "latitude_84": 30.65549294 }, { "corporate_name": "平湖市和顺粮油专业合作社", "longitude_84": 121.1214534, "latitude_84": 30.69091272 }, { "corporate_name": "玉梅家庭农场", "longitude_84": 121.008669, "latitude_84": 30.67897388 }, { "corporate_name": "平湖市冯妈妈家庭农场有限公司", "longitude_84": 121.1159542, "latitude_84": 30.73540625 }, { "corporate_name": "顾佳家庭农场", "longitude_84": 121.0681451, "latitude_84": 30.67507803 }, { "corporate_name": "勤美农场", "longitude_84": 121.1096071, "latitude_84": 30.64557908 }, { "corporate_name": "平湖市誉祥生态家庭农场", "longitude_84": 121.0763173, "latitude_84": 30.71437528 }, { "corporate_name": "平湖市联旺农业科技有限公司", "longitude_84": 121.084896, "latitude_84": 30.71599944 }, { "corporate_name": "平湖市合平粮油专业合作社", "longitude_84": 121.2298535, "latitude_84": 30.72431717 }, { "corporate_name": "嘉兴市四季水产食品有限公司", "longitude_84": 121.0857314, "latitude_84": 30.7046857 }, { "corporate_name": "平湖市广陈镇寸心家庭农场", "longitude_84": 121.0577729, "latitude_84": 30.76241075 }, { "corporate_name": "花林家庭农场", "longitude_84": 121.216164, "latitude_84": 30.70338141 }, { "corporate_name": "平湖市曹桥街道惠民家庭农场", "longitude_84": 120.981538, "latitude_84": 30.69144801 }, { "corporate_name": "平湖市海沣农业科技有限公司", "longitude_84": 121.0161627, "latitude_84": 30.6274419 }, { "corporate_name": "平湖市禾清源果蔬专业合作社", "longitude_84": 120.9563991, "latitude_84": 30.65540643 }, { "corporate_name": "平湖市绿农家庭农场", "longitude_84": 120.9643944, "latitude_84": 30.65712136 }, { "corporate_name": "宇丰家庭农场", "longitude_84": 121.0094256, "latitude_84": 30.62689383 }, { "corporate_name": "平湖市曹桥街道稻虾缘家庭农场", "longitude_84": 120.9681421, "latitude_84": 30.65740314 }, { "corporate_name": "平湖市灵来家庭农场", "longitude_84": 121.0992024, "latitude_84": 30.6567874 }, { "corporate_name": "平湖市富航农产品经营部", "longitude_84": 121.1607707, "latitude_84": 30.66574712 }, { "corporate_name": "平湖市富航农产品经营部", "longitude_84": 121.1607707, "latitude_84": 30.66574712 }, { "corporate_name": "米莱家庭农场", "longitude_84": 121.1204447, "latitude_84": 30.6617792 }, { "corporate_name": "平湖市丰郁果蔬专业合作社", "longitude_84": 121.1485658, "latitude_84": 30.67923674 }, { "corporate_name": "平湖市曹桥街道盛林家庭农场", "longitude_84": 120.9520389, "latitude_84": 30.68843846 }, { "corporate_name": "平湖市煜耀水产有限公司", "longitude_84": 120.9913308, "latitude_84": 30.65086025 }, { "corporate_name": "平湖市绿野果蔬专业合作社", "longitude_84": 120.9637666, "latitude_84": 30.65478706 }, { "corporate_name": "平湖市照能家庭农场有限公司", "longitude_84": 121.086308, "latitude_84": 30.74133411 }, { "corporate_name": "平湖市曹桥街道银忠家庭农场", "longitude_84": 120.976839, "latitude_84": 30.68800744 }, { "corporate_name": "平湖愚桥生态农业有限公司", "longitude_84": 120.957225, "latitude_84": 30.6762689 }, { "corporate_name": "平湖市曹桥街道鲜枝园家庭农场", "longitude_84": 120.9511873, "latitude_84": 30.68888719 }, { "corporate_name": "平湖市戴氏果蔬专业合作社", "longitude_84": 120.9766307, "latitude_84": 30.68784013 }, { "corporate_name": "平湖市新仓果蔬专业合作社", "longitude_84": 121.1845143, "latitude_84": 30.71134047 }, { "corporate_name": "平湖市农丰粮油专业合作社", "longitude_84": 121.1856955, "latitude_84": 30.72371739 }, { "corporate_name": "平湖市绿丰家庭农场", "longitude_84": 121.1818349, "latitude_84": 30.7259424 }, { "corporate_name": "平湖市曹桥街道果真好家庭农场", "longitude_84": 120.9952447, "latitude_84": 30.6710272 }, { "corporate_name": "平湖市一丰元果蔬专业合作社", "longitude_84": 120.9668971, "latitude_84": 30.64652937 }, { "corporate_name": "平湖市曹桥街道瑞丰园家庭农场", "longitude_84": 120.9663891, "latitude_84": 30.64300429 }, { "corporate_name": "平湖市马厩服良蘑菇专业合作社", "longitude_84": 120.9770143, "latitude_84": 30.62714828 }, { "corporate_name": "平湖市曹桥街道天一林家庭农场", "longitude_84": 120.982378, "latitude_84": 30.64293772 }, { "corporate_name": "平湖市冯氏食用菌专业合作社", "longitude_84": 121.0050713, "latitude_84": 30.63979933 }, { "corporate_name": "平湖市曹桥街道左右果家庭农场", "longitude_84": 120.9874499, "latitude_84": 30.6401867 }, { "corporate_name": "平湖市草仙子无花果专业合作社", "longitude_84": 120.9993936, "latitude_84": 30.69375986 }, { "corporate_name": "平湖市曹桥街道阳光家庭农场", "longitude_84": 120.9602786, "latitude_84": 30.64146896 }, { "corporate_name": "平湖市广陈镇顺收家庭农场", "longitude_84": 121.1159542, "latitude_84": 30.73540625 }, { "corporate_name": "平湖市新仓镇惠风粮油专业合作社", "longitude_84": 121.1845113, "latitude_84": 30.71134046 }, { "corporate_name": "平湖市和丰农业科技有限公司", "longitude_84": 121.1845113, "latitude_84": 30.71134046 }, { "corporate_name": "平湖市曹桥街道全民家庭农场", "longitude_84": 120.9547872, "latitude_84": 30.66359861 }, { "corporate_name": "平湖市甜甜家庭农场有限公司", "longitude_84": 121.124919, "latitude_84": 30.74223418 }, { "corporate_name": "平湖市广陈镇冯氏农场", "longitude_84": 121.1616132, "latitude_84": 30.77513813 }, { "corporate_name": "平湖市独山港镇徐雷家庭农场", "longitude_84": 121.1446403, "latitude_84": 30.68228259 }, { "corporate_name": "平湖市广陈镇根才家庭农场", "longitude_84": 121.0878733, "latitude_84": 30.72782254 }, { "corporate_name": "平湖市常青食用菌有限公司", "longitude_84": 121.1852042, "latitude_84": 30.72804335 }, { "corporate_name": "家庭农场", "longitude_84": 121.1671148, "latitude_84": 30.76921663 }, { "corporate_name": "平湖宝宇粮食专业合作社", "longitude_84": 121.1266706, "latitude_84": 30.75037511 }, { "corporate_name": "平湖市饴来蜂产品专业合作社", "longitude_84": 121.1307992, "latitude_84": 30.76153966 }, { "corporate_name": "平湖市高新天华水产专业合作社", "longitude_84": 121.065891, "latitude_84": 30.72950127 }, { "corporate_name": "平湖市龙顺粮油专业合作社", "longitude_84": 121.0613473, "latitude_84": 30.74817279 }, { "corporate_name": "平湖市新仓镇农绿家庭农场", "longitude_84": 121.1879604, "latitude_84": 30.71650893 }, { "corporate_name": "平湖市广陈镇方舒家庭农场", "longitude_84": 121.0760066, "latitude_84": 30.73890314 }, { "corporate_name": "平湖市龙华粮油专业合作社", "longitude_84": 121.0764048, "latitude_84": 30.75500948 }, { "corporate_name": "平湖市荷花池家庭农场有限公司", "longitude_84": 121.205283, "latitude_84": 30.71868477 }, { "corporate_name": "平湖市前眉粮油专业合作社", "longitude_84": 121.0764048, "latitude_84": 30.75500948 }, { "corporate_name": "平湖市陆氏果蔬专业合作社", "longitude_84": 120.9902136, "latitude_84": 30.66640364 }, { "corporate_name": "平湖市新仓无花果专业合作社", "longitude_84": 121.1845143, "latitude_84": 30.71134047 }, { "corporate_name": "东东家庭农场", "longitude_84": 121.1153412, "latitude_84": 30.69367639 }, { "corporate_name": "陈匠粮油", "longitude_84": 121.1163701, "latitude_84": 30.66952065 }, { "corporate_name": "浙江东郁广陈果业有限公司", "longitude_84": 121.1343836, "latitude_84": 30.77295867 }, { "corporate_name": "平湖市食为天粮食专业合作社", "longitude_84": 121.1270448, "latitude_84": 30.75279132 }, { "corporate_name": "平湖市红旗米业有限责任公司", "longitude_84": 121.1270448, "latitude_84": 30.75279132 }, { "corporate_name": "平湖市广陈镇广顺家庭农场", "longitude_84": 121.1571045, "latitude_84": 30.77135579 }, { "corporate_name": "平湖市林埭镇张氏蜂场", "longitude_84": 121.0778821, "latitude_84": 30.6510419 }, { "corporate_name": "平湖市高薪果蔬专业合作社", "longitude_84": 121.1297781, "latitude_84": 30.77004477 }, { "corporate_name": "平湖市洁云食用菌专业合作社", "longitude_84": 121.1856955, "latitude_84": 30.72371739 }, { "corporate_name": "平湖市新仓镇陈岳平家庭农场有限公司", "longitude_84": 121.1856955, "latitude_84": 30.72371739 }, { "corporate_name": "剑丽家庭农场", "longitude_84": 121.0760938, "latitude_84": 30.74650915 }, { "corporate_name": "平湖市新仓镇耀光粮油专业合作社", "longitude_84": 121.2245875, "latitude_84": 30.75543066 }, { "corporate_name": "平湖市格林家庭农场", "longitude_84": 121.2147465, "latitude_84": 30.73890912 }, { "corporate_name": "平湖市新仓镇盛婷家庭农场", "longitude_84": 121.1908252, "latitude_84": 30.72162524 }, { "corporate_name": "朱良忠家庭农场", "longitude_84": 121.1816896, "latitude_84": 30.72612205 }, { "corporate_name": "萌宝家庭农场", "longitude_84": 121.1816876, "latitude_84": 30.72612204 }, { "corporate_name": "平湖市新仓镇冯叶周家庭农场", "longitude_84": 121.204175, "latitude_84": 30.71094409 }, { "corporate_name": "平湖市乐天家庭农场", "longitude_84": 121.2245875, "latitude_84": 30.75543066 }, { "corporate_name": "平湖市林埭镇老佘蜂场", "longitude_84": 121.1015876, "latitude_84": 30.6587512 }, { "corporate_name": "平湖市单家小院家庭农场", "longitude_84": 121.1690685, "latitude_84": 30.72536005 }, { "corporate_name": "平湖市荣农家庭农场有限公司", "longitude_84": 121.2412149, "latitude_84": 30.74940548 }, { "corporate_name": "伍丰粮油", "longitude_84": 121.1072964, "latitude_84": 30.75676481 }, { "corporate_name": "平湖市互益粮食专业合作社", "longitude_84": 121.1159542, "latitude_84": 30.73540625 }, { "corporate_name": "嘉兴天润水产养殖有限公司", "longitude_84": 121.1656415, "latitude_84": 30.77272298 }, { "corporate_name": "平湖市徐东粮食专业合作社", "longitude_84": 121.0913473, "latitude_84": 30.68958869 }, { "corporate_name": "沈微平农场", "longitude_84": 121.0862062, "latitude_84": 30.76234518 }, { "corporate_name": "个人经营", "longitude_84": 121.1004618, "latitude_84": 30.65369112 }, { "corporate_name": "陆志康", "longitude_84": 121.0731643, "latitude_84": 30.68675236 }, { "corporate_name": "李芳勤", "longitude_84": 121.0725651, "latitude_84": 30.68676391 }, { "corporate_name": "平湖市呦呦农业发展有限公司", "longitude_84": 121.0640548, "latitude_84": 30.67405056 }, { "corporate_name": "平湖市盈利家庭农场", "longitude_84": 121.1566172, "latitude_84": 30.72783253 }, { "corporate_name": "家庭农场", "longitude_84": 121.1163701, "latitude_84": 30.66952065 }, { "corporate_name": "平湖市新仓镇绿满园家庭农场", "longitude_84": 121.2006732, "latitude_84": 30.7043793 }, { "corporate_name": "平湖振林粮油专业合作社", "longitude_84": 121.1856955, "latitude_84": 30.72371739 }, { "corporate_name": "平湖市新仓镇林飞粮油专业合作社", "longitude_84": 121.1988032, "latitude_84": 30.71691534 }, { "corporate_name": "平湖市陈祖法家庭农场有限公司", "longitude_84": 121.2084898, "latitude_84": 30.76271434 }, { "corporate_name": "平湖市新仓镇洁成家庭农场", "longitude_84": 121.2085534, "latitude_84": 30.70858906 }, { "corporate_name": "平湖市火良水产养殖专业合作社", "longitude_84": 121.1856955, "latitude_84": 30.72371739 }, { "corporate_name": "平湖市玉坪家庭农场有限公司", "longitude_84": 121.2233374, "latitude_84": 30.74411857 }, { "corporate_name": "专业合作社", "longitude_84": 121.1678142, "latitude_84": 30.73357453 }, { "corporate_name": "平湖市新仓镇许玉中家庭农场", "longitude_84": 121.2245875, "latitude_84": 30.75543066 }, { "corporate_name": "平湖市新仓镇良园家庭农场", "longitude_84": 121.1999607, "latitude_84": 30.76989574 }, { "corporate_name": "平湖市新仓镇新星出口蔬菜生产专业合作社", "longitude_84": 121.204182, "latitude_84": 30.71082716 }, { "corporate_name": "农产品经营", "longitude_84": 121.1875106, "latitude_84": 30.7755446 }, { "corporate_name": "平湖市新新家庭农场有限公司", "longitude_84": 121.1972819, "latitude_84": 30.77460916 }, { "corporate_name": "平胡市佳信家庭农场有公司", "longitude_84": 121.2084898, "latitude_84": 30.76271434 }, { "corporate_name": "平湖市净鑫家庭农场有限公司", "longitude_84": 121.2245875, "latitude_84": 30.75543066 }, { "corporate_name": "平湖市紫金山家庭农场有限公司", "longitude_84": 121.1997074, "latitude_84": 30.75578183 }, { "corporate_name": "平湖市林飞粮油专业合作社", "longitude_84": 121.2098056, "latitude_84": 30.71339825 }, { "corporate_name": "平湖市新仓镇安山家庭农场", "longitude_84": 121.2245875, "latitude_84": 30.75543066 }, { "corporate_name": "平湖市思远家庭农场有限公司", "longitude_84": 121.2296123, "latitude_84": 30.73720649 }, { "corporate_name": "平湖市新仓镇盛中华家庭农场", "longitude_84": 121.1845113, "latitude_84": 30.71134046 }, { "corporate_name": "无公害有机蔬菜", "longitude_84": 121.1759729, "latitude_84": 30.76658562 }, { "corporate_name": "平湖市龙柳家庭农场", "longitude_84": 121.1834705, "latitude_84": 30.73358046 }, { "corporate_name": "平湖市经果粮油专业合作社", "longitude_84": 121.1996293, "latitude_84": 30.75611654 }, { "corporate_name": "在珍家庭农场", "longitude_84": 121.1629517, "latitude_84": 30.73009216 }, { "corporate_name": "平湖市众佳诚家庭农场", "longitude_84": 121.1690685, "latitude_84": 30.72536005 }, { "corporate_name": "养殖，销售", "longitude_84": 121.2246584, "latitude_84": 30.74464733 }, { "corporate_name": "平湖市银丰果蔬专业合作社", "longitude_84": 121.1624943, "latitude_84": 30.72383446 }, { "corporate_name": "振华水产专业合作社", "longitude_84": 121.174193, "latitude_84": 30.72318175 }, { "corporate_name": "富甲家庭农场", "longitude_84": 121.1945509, "latitude_84": 30.73170626 }, { "corporate_name": "金枝玉叶家庭农场", "longitude_84": 121.1718415, "latitude_84": 30.7444805 }, { "corporate_name": "平湖市新仓镇兆刚莲藕专业合作社", "longitude_84": 121.2245875, "latitude_84": 30.75543066 }, { "corporate_name": "稻谷大米", "longitude_84": 121.1249239, "latitude_84": 30.73180352 }, { "corporate_name": "平湖市新仓镇双弓家庭农场", "longitude_84": 121.2170824, "latitude_84": 30.73520647 }, { "corporate_name": "平湖市秋伟家庭农场有限公司", "longitude_84": 121.2153011, "latitude_84": 30.72746954 }, { "corporate_name": "跃杰家庭农场", "longitude_84": 121.0572786, "latitude_84": 30.83741131 }, { "corporate_name": "平湖市顺天粮油专业合作社", "longitude_84": 121.1352818, "latitude_84": 30.69188117 }, { "corporate_name": "平湖市浩天食品有限公司", "longitude_84": 121.1203871, "latitude_84": 30.71635618 }, { "corporate_name": "平湖市三丰果蔬专业合作社", "longitude_84": 121.1214922, "latitude_84": 30.82306261 }, { "corporate_name": "浙江金丝娘水果专业合作社", "longitude_84": 121.2174741, "latitude_84": 30.71946581 }, { "corporate_name": "浙江金稼园农业科技有限公司", "longitude_84": 121.0364415, "latitude_84": 30.64897683 }, { "corporate_name": "平湖市食用菌研究所", "longitude_84": 121.0130218, "latitude_84": 30.72310062 }, { "corporate_name": "平湖市煜耀水产有限公司", "longitude_84": 121.0058071, "latitude_84": 30.65801906 }, { "corporate_name": "平湖市绿岛食品有限公司", "longitude_84": 121.0768186, "latitude_84": 30.64595993 }, { "corporate_name": "平湖市华昌农产品食品加工有限公司", "longitude_84": 120.9833649, "latitude_84": 30.71103307 }, { "corporate_name": "浩佳果蔬", "longitude_84": 121.0195596, "latitude_84": 30.76360395 }, { "corporate_name": "平湖市老鼎丰酿造食品有限公司", "longitude_84": 120.983984, "latitude_84": 30.70623258 }, { "corporate_name": "浙江耕旺农业科技有限公司", "longitude_84": 121.0986335, "latitude_84": 30.7609452 }, { "corporate_name": "浙江佑翰农林科技有限公司", "longitude_84": 121.0986335, "latitude_84": 30.7609452 }, { "corporate_name": "浙江旭之源生态农业科技有限公司", "longitude_84": 120.9644941, "latitude_84": 30.65713109 }, { "corporate_name": "平湖市堰上人家农产品有限公司", "longitude_84": 121.0107515, "latitude_84": 30.67951945 }, { "corporate_name": "平湖市水生菜家庭农场", "longitude_84": 121.0954215, "latitude_84": 30.78367058 }, { "corporate_name": "浙江欣齐现代农业科技有限公司", "longitude_84": 121.207052, "latitude_84": 30.71263213 }, { "corporate_name": "平湖市荷花池家庭农场有限公司", "longitude_84": 121.2130196, "latitude_84": 30.71343405 }, { "corporate_name": "平湖市勤浓果蔬专业合作社", "longitude_84": 121.1163811, "latitude_84": 30.66955864 }, { "corporate_name": "平湖高品生态农业有限公司", "longitude_84": 120.9784719, "latitude_84": 30.77674162 }],
+                        "WSNB": [{ "suppliers_name": "平湖公共服务中心", "longitude_84": "", "latitude_84": "" }, { "suppliers_name": "平湖市新埭镇小姑妈家庭农场", "longitude_84": 121.083921, "latitude_84": 30.80473811 }, { "suppliers_name": "浙江新创农合商业管理有限公司", "longitude_84": 121.051234, "latitude_84": 30.64513807 }, { "suppliers_name": "嘉兴劳利辛现代农业科技有限公司", "longitude_84": 121.2518934, "latitude_84": 30.72253967 }, { "suppliers_name": "平湖市银丰果蔬专业合作社", "longitude_84": 121.1624923, "latitude_84": 30.72383445 }, { "suppliers_name": "平湖市缘绿果蔬专业合作社", "longitude_84": "", "latitude_84": "" }, { "suppliers_name": "平湖市煜耀水产有限公司", "longitude_84": 120.9938615, "latitude_84": 30.66336492 }, { "suppliers_name": "嘉兴云仙子农业科技有限公司", "longitude_84": 121.1316269, "latitude_84": 30.75533607 }, { "suppliers_name": "平湖市华昌农产品食品加工有限公司", "longitude_84": 120.9832722, "latitude_84": 30.71096738 }, { "suppliers_name": "平湖市金港果蔬专业合作社", "longitude_84": 121.0671146, "latitude_84": 30.7705744 }, { "suppliers_name": "金丝娘水果专业合作社", "longitude_84": 121.2372476, "latitude_84": 30.69822728 }, { "suppliers_name": "平湖市绿岛食品有限公司", "longitude_84": 121.0767207, "latitude_84": 30.64596 }, { "suppliers_name": "平湖市浩天食品有限公司", "longitude_84": 121.1188385, "latitude_84": 30.71619967 }, { "suppliers_name": "嘉兴市四季水产食品有限公司", "longitude_84": 121.0859603, "latitude_84": 30.70438176 }, { "suppliers_name": "平湖市华氏餐饮管理有限公司", "longitude_84": 121.0122629, "latitude_84": 30.70523969 }, { "suppliers_name": "嘉兴市渔小跑水产有限公司", "longitude_84": 121.0701238, "latitude_84": 30.71604914 }, { "suppliers_name": "嘉兴市水月湾农业科技有限公司", "longitude_84": 121.1103476, "latitude_84": 30.84499621 }, { "suppliers_name": "当湖松风台陈氏糕团店", "longitude_84": 121.0070308, "latitude_84": 30.69253435 }, { "suppliers_name": "浙江金稼园农业科技有限公司", "longitude_84": 121.0364435, "latitude_84": 30.64898582 }, { "suppliers_name": "平湖市绿野果蔬专业合作社", "longitude_84": 121.09734, "latitude_84": 30.80131916 }, { "suppliers_name": "平湖市洁云食用菌专业合作社", "longitude_84": 121.2048343, "latitude_84": 30.77889988 }, { "suppliers_name": "平湖市当湖街道紫香缘家庭农场", "longitude_84": 121.0922086, "latitude_84": 30.70672734 }, { "suppliers_name": "浙江胜花绿化建设有限公司", "longitude_84": 121.0472002, "latitude_84": 30.65042053 }, { "suppliers_name": "平湖市金平湖西瓜专业合作社", "longitude_84": 121.0139961, "latitude_84": 30.71333664 }, { "suppliers_name": "平湖市钟埭街道众大食品厂", "longitude_84": 120.9900637, "latitude_84": 30.76839842 }, { "suppliers_name": "平湖市碧祥菌菇有限公司", "longitude_84": 121.0097189, "latitude_84": 30.64658946 }, { "suppliers_name": "平湖市凯宇鲜菜有限公司", "longitude_84": 120.9853878, "latitude_84": 30.74480094 }, { "suppliers_name": "潮香村食品科技有限公司", "longitude_84": 121.0146598, "latitude_84": 30.76078643 }, { "suppliers_name": "平湖市钟埭街道浩佳家庭农场", "longitude_84": 121.0314509, "latitude_84": 30.76301342 }, { "suppliers_name": "新仓镇单家小院家庭农场", "longitude_84": 121.1650136, "latitude_84": 30.72114753 }, { "suppliers_name": "平湖市食用菌研究所", "longitude_84": 120.9649635, "latitude_84": 30.76790924 }, { "suppliers_name": "平湖市新仓镇农绿家庭农场", "longitude_84": 121.1879604, "latitude_84": 30.71650893 }, { "suppliers_name": "平湖市钟埭街道巧良家庭农场", "longitude_84": 121.0461045, "latitude_84": 30.72766603 }, { "suppliers_name": "平湖穗农果蔬专业合作社", "longitude_84": 121.0524064, "latitude_84": 30.73895111 }, { "suppliers_name": "浙江九食分子美食有限公司", "longitude_84": 120.9930216, "latitude_84": 30.73595136 }, { "suppliers_name": "平湖市老鼎丰酿造食品有限公司", "longitude_84": 120.9843925, "latitude_84": 30.70622736 }, { "suppliers_name": "浙江泛亚生物医药股份有限公司", "longitude_84": 120.9953415, "latitude_84": 30.74164037 }, { "suppliers_name": "丹尼斯冠食品（中国）有限公司", "longitude_84": 121.0073307, "latitude_84": 30.75197667 }, { "suppliers_name": "平湖市煲正香米业有限公司", "longitude_84": 121.1115889, "latitude_84": 30.7927923 }, { "suppliers_name": "平湖市华凰果蔬专业合作社", "longitude_84": 121.1689988, "latitude_84": 30.73187762 }, { "suppliers_name": "平湖市廿四节气家庭农场", "longitude_84": 121.1092375, "latitude_84": 30.81400297 }, { "suppliers_name": "平湖市新仓无花果专业合作社", "longitude_84": 121.1784411, "latitude_84": 30.71643298 }, { "suppliers_name": "平湖市通用电气安装有限公司金穗分公司", "longitude_84": 120.993896, "latitude_84": 30.71637257 }, { "suppliers_name": "浙江耕旺农业科技有限公司", "longitude_84": 121.0975285, "latitude_84": 30.78375579 }, { "suppliers_name": "平湖市广陈镇新广家庭农场", "longitude_84": 121.1283299, "latitude_84": 30.77216172 }, { "suppliers_name": "平湖市百家欣果园有限公司", "longitude_84": 121.0940536, "latitude_84": 30.64387747 }, { "suppliers_name": "浙江润极农业科技有限公司", "longitude_84": 121.1311248, "latitude_84": 30.77207651 }, { "suppliers_name": "浙江绿迹农业科技有限公司", "longitude_84": 121.1482302, "latitude_84": 30.76122623 }, { "suppliers_name": "浙江中晨生态农业有限公司", "longitude_84": 121.0909933, "latitude_84": 30.77337722 }, { "suppliers_name": "嘉兴蓝城春风江南农业科技服务有限公司", "longitude_84": 121.1238658, "latitude_84": 30.77755832 }, { "suppliers_name": "森森花语/拓春园艺", "longitude_84": 121.0446098, "latitude_84": 30.81682852 }, { "suppliers_name": "平湖市广陈镇戴建平家庭农场", "longitude_84": 121.1392585, "latitude_84": 30.74740955 }, { "suppliers_name": "平湖市丰绿家庭农场有限公司", "longitude_84": 121.1238396, "latitude_84": 30.73226401 }, { "suppliers_name": "平湖市新埭镇良友果蔬产业园", "longitude_84": 121.0681278, "latitude_84": 30.7852643 }, { "suppliers_name": "平湖市皇果葡萄专业合作社", "longitude_84": 121.1287815, "latitude_84": 30.77213333 }, { "suppliers_name": "嘉兴百玫生态农业科技有限公司", "longitude_84": 121.1307753, "latitude_84": 30.75976857 }, { "suppliers_name": "平湖市七一浆果园家庭农场", "longitude_84": 121.1313834, "latitude_84": 30.71019869 }, { "suppliers_name": "平湖市独山港镇平丰家庭农场", "longitude_84": 121.2041793, "latitude_84": 30.70784462 }, { "suppliers_name": "平湖市顺天粮油专业合作社", "longitude_84": 121.1350504, "latitude_84": 30.69217069 }, { "suppliers_name": "平湖市愚桥生态农业有限公司", "longitude_84": 120.9554701, "latitude_84": 30.67687886 }, { "suppliers_name": "平湖市恒青田农业开发有限公司", "longitude_84": 120.9553408, "latitude_84": 30.68527723 }, { "suppliers_name": "平湖市曹桥街道久耀家庭农场", "longitude_84": 121.0061181, "latitude_84": 30.63231641 }, { "suppliers_name": "平湖市禾清源果蔬专业合作社", "longitude_84": 120.967323, "latitude_84": 30.64330663 }, { "suppliers_name": "平湖市海沣农业科技有限公司     ", "longitude_84": 121.0174113, "latitude_84": 30.62837893 }, { "suppliers_name": "平湖市云飞蜜蜂授粉专业合作社", "longitude_84": 121.2242123, "latitude_84": 30.68116135 }, { "suppliers_name": "平湖市佳悦生态农场", "longitude_84": 120.9571231, "latitude_84": 30.64168473 }, { "suppliers_name": "平湖市三丰果蔬专业合作社", "longitude_84": 121.1214672, "latitude_84": 30.82299362 }, { "suppliers_name": "平湖市妙农家庭农场", "longitude_84": 121.0805002, "latitude_84": 30.70451925 }, { "suppliers_name": "浙江众信农业科技有限公司", "longitude_84": 121.1297444, "latitude_84": 30.75317063 }, { "suppliers_name": "平湖市福鑫家庭农场", "longitude_84": 121.1449681, "latitude_84": 30.71621672 }, { "suppliers_name": "平湖市千岁农庄", "longitude_84": 121.1146458, "latitude_84": 30.78497899 }, { "suppliers_name": "浙江佑翰农林科技有限公司", "longitude_84": 121.1297444, "latitude_84": 30.75317063 }, { "suppliers_name": "嘉兴市乍浦老渔民水产食品有限公司", "longitude_84": 121.1187388, "latitude_84": 30.61715879 }, { "suppliers_name": "平湖市淡木工艺品有限公司", "longitude_84": 121.0710053, "latitude_84": 30.69559823 }, { "suppliers_name": "平湖市阿美珍珠饰品经营部", "longitude_84": 121.0812806, "latitude_84": 30.7033044 }, { "suppliers_name": "珍爱装饰", "longitude_84": 121.0949463, "latitude_84": 30.61064955 }, { "suppliers_name": "平湖市吾庐民宿", "longitude_84": 121.0612365, "latitude_84": 30.67695312 }, { "suppliers_name": "樱花里梦想乐园", "longitude_84": 120.9784729, "latitude_84": 30.77673262 }, { "suppliers_name": "平湖市星火农场", "longitude_84": 121.0619502, "latitude_84": 30.67657927 }, { "suppliers_name": "大印农场", "longitude_84": 121.0661237, "latitude_84": 30.6817913 }, { "suppliers_name": "凯宇农庄", "longitude_84": 121.0577049, "latitude_84": 30.72947092 }, { "suppliers_name": "美郁花园", "longitude_84": 121.1332387, "latitude_84": 30.77397047 }, { "suppliers_name": "平湖市李小平农家乐", "longitude_84": 120.9761569, "latitude_84": 30.7794509 }, { "suppliers_name": "忆耘膳私房菜", "longitude_84": 121.0623484, "latitude_84": 30.81968467 }, { "suppliers_name": "平湖市缘绿生态农业科技园", "longitude_84": 121.0743719, "latitude_84": 30.80399975 }, { "suppliers_name": "平湖市新埭镇大志家庭农场", "longitude_84": 121.0631452, "latitude_84": 30.81744883 }, { "suppliers_name": "平湖市姚浜水果专业合作社", "longitude_84": 121.1141015, "latitude_84": 30.81880188 }, { "suppliers_name": "平湖市新埭镇盛龙果蔬园艺场", "longitude_84": 121.1071015, "latitude_84": 30.80117079 }, { "suppliers_name": "中明果蔬种植基地", "longitude_84": 121.076479, "latitude_84": 30.82177212 }, { "suppliers_name": "平湖农飞客农业科技有限公司", "longitude_84": 121.0038454, "latitude_84": 30.74001335 }, { "suppliers_name": "平湖市新埭镇鲜果园家庭农场", "longitude_84": 121.0417996, "latitude_84": 30.7772463 }, { "suppliers_name": "平湖市欣园家庭农场", "longitude_84": 121.0244338, "latitude_84": 30.79247795 }, { "suppliers_name": "子琪家庭农场", "longitude_84": 121.1149073, "latitude_84": 30.82929866 }, { "suppliers_name": "富民花卉", "longitude_84": "", "latitude_84": "" }, { "suppliers_name": "祥发花坊", "longitude_84": "", "latitude_84": "" }, { "suppliers_name": "嘉兴市家树文化旅游有限公司", "longitude_84": 121.1066562, "latitude_84": 30.82551798 }, { "suppliers_name": "平湖市新埭镇林忠家庭农场", "longitude_84": 121.0745526, "latitude_84": 30.80475218 }, { "suppliers_name": "上海速斯农业科技有限公司", "longitude_84": "", "latitude_84": "" }, { "suppliers_name": "平湖市曹桥供销专业合作社", "longitude_84": 120.9684846, "latitude_84": 30.67507213 }, { "suppliers_name": "嘉兴上柒寸生物科技有限公司", "longitude_84": 121.057704, "latitude_84": 30.62149302 }, { "suppliers_name": "浙个村农产品（平湖）有限公司", "longitude_84": 121.0470785, "latitude_84": 30.65057771 }, { "suppliers_name": "嘉兴市金虹户外活动有限公司", "longitude_84": 121.022995, "latitude_84": 30.67991629 }, { "suppliers_name": "平湖市当湖街道紫香缘家庭农场", "longitude_84": 121.0922086, "latitude_84": 30.70672734 }],
+                        "BJX_NUM": [
+                            {
+                                "town": "当湖街道",
+                                "num": 10
+                            },
+                            {
+                                "town": "新埭镇",
+                                "num": 28
+                            },
+                            {
+                                "town": "乍浦镇",
+                                "num": 3
+                            },
+                            {
+                                "town": "曹桥街道",
+                                "num": 31
+                            },
+                            {
+                                "town": "新仓镇",
+                                "num": 56
+                            },
+                            {
+                                "town": "独山港镇",
+                                "num": 39
+                            },
+                            {
+                                "town": "广陈镇",
+                                "num": 43
+                            },
+                            {
+                                "town": "钟埭街道",
+                                "num": 5
+                            },
+                            {
+                                "town": "林埭镇",
+                                "num": 29
+                            }
+                        ],
+                        "WSNB_NUM": [
+                            {
+                                "town": "当湖街道",
+                                "num": 9
+                            },
+                            {
+                                "town": "新埭镇",
+                                "num": 22
+                            },
+                            {
+                                "town": "乍浦镇",
+                                "num": 3
+                            },
+                            {
+                                "town": "曹桥街道",
+                                "num": 8
+                            },
+                            {
+                                "town": "新仓镇",
+                                "num": 7
+                            },
+                            {
+                                "town": "独山港镇",
+                                "num": 7
+                            },
+                            {
+                                "town": "广陈镇",
+                                "num": 13
+                            },
+                            {
+                                "town": "钟埭街道",
+                                "num": 17
+                            },
+                            {
+                                "town": "林埭镇",
+                                "num": 12
+                            }
+                        ]
+                    };
+                    // 消息交互
+                    let message = { "key": "clusterLayerByInit", "value": { "pointsObj": pointsObj } };
+                    sendMessage('gisLayerMessage', message);
+                }
+            }
+            // 要素消息交互
+            if (obj.type == "gisFeatureMessage") {
+                if (obj.data.key == "featureInfo" && obj.data.value) {
+                    console.log("featureInfo交互---要素消息交互", obj.data.value.featureInfo);
+                }
+            }
+        }
+
+        // 发送消息
+        function sendMessage (type, data) {
+            // 向子页面传递消息
+            let iframe = document.getElementById("gisIframe");
+            iframe.contentWindow.postMessage({ type: type, data: data }, '*');
+        }
+    </script>
+
+</head>
+
+<body style="margin:0;overflow:hidden;width:100%;height:100%;position:absolute;top:0;background-color:transparent;">
+    <div id="toolbar" class="panel panel-primary">
+        <div class='panel-heading'>
+            <h5 class='panel-title text-center'></h5>图例
+        </div>
+        <div class='panel-body content'>
+            <div class="checkbox checkbox-layer">
+                <input type="checkbox" value="BJX" checked>
+                <label style="padding-left:0px;"> 本家鲜 </label>
+            </div>
+            <div class="checkbox checkbox-layer">
+                <input type="checkbox" value="WSNB" checked>
+                <label style="padding-left:0px;"> 网上农博 </label>
+            </div>
+        </div>
+    </div>
+	<div id="toolbar1" class="panel panel-primary">
+		<div class='panel-heading'>
+				<h5 class='panel-title text-center'></h5>功能交互</div>
+			<div class='panel-body content'>
+				<input type="button" class="btn btn-default" onclick="panTo()" value="定位"/>
+			</div>
+		</div>
+	</div>
+<iframe id="gisIframe" src="./PHJSC_final.html" style="width:100%;height:100%;background-color:transparent;border:rgba(255,255,255,0);"></iframe>
+    <script>
+        let checkboxArr;
+        // 复选框交互
+        $(".checkbox-layer>input").on("click", function () {
+            checkboxArr = [];
+            $(".panel-body").find(":checkbox:checked").each(function () {
+                checkboxArr.push($(this).val());
+            });
+            changeLayerByType(checkboxArr);
+        });
+
+        // 交互方法poin
+        /**
+         * 根据类型数组修改图层
+         * @param {Array.<String>} type --> 类型数组：["BJX","WSNB"]，无值传 []
+         */
+        function changeLayerByType (type) {
+            console.log(type);
+			
+            let message = { "key": "changeLayerByType", "value": { "type": type } };
+            sendMessage('gisLayerMessage', message);
+        }
+        /**
+         * 定位
+		 * "longitude_84"，"latitude_84"
+         */
+        function panTo() {
+            console.log("------------- 定位 --------------");
+			
+			// 必须包含的字段："longitude_84"，"latitude_84"
+			let pointObj = {"longitude_84": 121.2518934, "latitude_84": 30.72253967};
+			
+			let message = { "key": "searchFeature", "value": { "pointObj": pointObj} };
+			sendMessage('gisLayerMessage', message);
+        }
+    </script>
+
+</html>

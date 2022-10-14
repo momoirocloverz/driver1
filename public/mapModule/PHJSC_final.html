@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>PHJSC</title>
+		<!-- WEB -->
+		<script type="text/javascript" src="./plugin/web/jquery/jquery.min.js"></script>
+		<!-- GIS -->
+		<link href="./plugin/gis/openlayers/6.5.0/ol.css" rel="stylesheet">
+		<script type="text/javascript" src="./plugin/gis/openlayers/6.5.0/ol.js"></script>
+		<script type="text/javascript" src="./plugin/gis/turf/5.1.6/turf.min.js"></script>
+		<!-- FNC -->
+		<script type="text/javascript" src="./plugin/gis/acol/acol.min.js"></script>
+		<script type="text/javascript" src="./plugin/js/message.js"></script>
+		<!-- DATA -->
+		<script type="text/javascript" src="./data/geoJson/data.js"></script>
+		<style type="text/css">
+			.pop {
+				background: url(./data/image/bg.png);
+				width: auto;
+				background-size: 100% 100%;
+				display: inline-block;
+				background-repeat: no-repeat;
+				max-width: 160px;
+				opacity: 0.8;
+				padding:14px 20px 14px 20px;
+				height: 52px;
+			}
+			.pop .text{
+				line-height: 24px;
+				color: #FFFFFF;
+				height: 52px;
+				display: flex;
+				align-items: center;
+			}
+			.text::-webkit-scrollbar{display:none;}
+		</style>
+	</head>
+	<body style=" margin: 0;overflow: hidden;background-color: transparent;width: 100%;height:100%;position: absolute;top: 0;">
+		<div class="pop" id="infoWindow"></div>
+		<div id="map" style="margin:0 auto;width: 100%;height: 100%; background-color: transparent;border:rgba(255,255,255,0);"></div>
+		
+		<script type="text/javascript">
+			// 数据解密
+			const geoJsonData_county = new acol_dea().decodeGeoJson({data:geoJsonData_county1});
+			const geoJsonData_town = new acol_dea().decodeGeoJson({data:geoJsonData_town1});
+
+			// 地图map对象
+			let acMap,vector_are,overLayer,vector_point,town_point;
+			let pointsAll = null;
+			let pointsType = ["BJX","WSNB"];
+			let zoom,lastRange = 0;
+			
+			let acolLayer;
+			let acUtil = new acol_util();
+			
+			init();
+			
+			function init(){
+				// acMap对象
+				acMap = new acol_map();
+				acMap.initMap({id:"map",center:[121.108325569296,30.7161906685102],zoom:11,minZoom:11,maxZoom:18,constrainResolution:false});
+				
+				acolLayer = new acol_layer(acMap.map);
+				
+				// 加载天地图图层
+				addTDTLayer("img");
+				// 加载背景图层
+				addBackgroundLayer();
+				// 加载行政区划矢量图层
+				addVectorLayer();
+				// 添加点图层
+				addPointLayer();
+				// 添加气泡叠加层
+				addPopupByElement(document.getElementById("infoWindow"));
+				
+				// 注册鼠标单击事件
+				acMap.mapEventOn(function(e){
+					zoom = e.map.getView().getZoom();
+					//console.log("--- zoom ---",zoom);
+					
+					/* vector_point.changed();
+					town_point.changed(); */
+					
+					if(zoom < 14){
+						acMap.hideLayer(vector_point);
+						acMap.showLayer(town_point);
+					}else{
+						acMap.hideLayer(town_point);
+						acMap.showLayer(vector_point);
+					}
+					
+					
+					
+				},"MOUSE_WHEEL");
+				
+				// 添加鼠标移动事件
+				acMap.mapEventOn(function(e){
+					// 屏幕坐标点获取要素
+					let features = acMap.map.getFeaturesAtPixel(e.pixel);
+					if(features.length){
+						if(["BJX","WSNB"].indexOf(features[0].getProperties()["type"]) == -1) return;
+						let props = features[0].getProperties();
+						// 打开气泡
+						openPopupByInfo(props,[props["longitude_84"],props["latitude_84"]]);
+					}else{
+						closePopup();
+					}
+				},"MOUSE_MOVE");
+				
+				// 添加要素选择器
+				let mapSelect = new ol.interaction.Select();
+				acMap.map.addInteraction(mapSelect);
+				mapSelect.on('select',function(e){
+					this.getFeatures().clear();	
+					if(!e.selected.length) return;
+					// 获取参数
+					let props = e.selected[0].getProperties();
+					// 打开气泡
+					//openPopupByInfo(props,[props["longitude_84"],props["latitude_84"]]);
+					
+					// featureInfo消息交互
+					let message = {"key":"featureInfo","value":{"featureInfo":acUtil.FPconversion(props)}};
+					sendMessage('gisFeatureMessage',message);
+				});
+				
+				// initInfo消息交互
+				let message = {"key":"initInfo","value":{"initType":true}};
+				sendMessage('gisMapMessage',message);
+			}
+			/**
+			 * 气泡显示
+			 */
+			function popupDisplay(display){
+				if(!display) closePopup();
+			}
+			/**
+			 * 根据类型数组修改图层
+			 */
+			function changeLayerByType(type){
+				pointsType = type;
+				
+				addPointFeatures();
+			}
+			/**
+			 * 添加聚合点要素
+			 */
+			function addPointFeatures(pointsObj){
+				if(!pointsAll) pointsAll = pointsObj;
+				
+				// 聚合数据
+				if(pointsAll["BJX_NUM"] && pointsAll["BJX_NUM"].length){
+					pointsAll["BJX_ALL"] = {};
+					pointsAll["BJX_NUM"].forEach((e) => {
+						pointsAll["BJX_ALL"][e["town"]] = e["num"]
+					});
+				}
+				if(pointsAll["WSNB_NUM"] && pointsAll["WSNB_NUM"].length){
+					pointsAll["WSNB_ALL"] = {};
+					pointsAll["WSNB_NUM"].forEach((e) => {
+						pointsAll["WSNB_ALL"][e["town"]] = e["num"]
+					});
+				}
+
+				// clear
+				closePopup();
+				vector_point.getSource().clear();
+				town_point.getSource().clear();
+				
+				// 点 --> 要素集合
+				let features = [];
+				if(pointsType.indexOf("BJX") != -1) pointsAll["BJX"].forEach((e) => {
+					if((!e["longitude_84"]) || (!e["longitude_84"])) return false;
+					// 自定义要素
+					let feature = new ol.Feature({
+						geometry: new ol.geom.Point([e["longitude_84"],e["latitude_84"]])
+					});
+					// 自定义属性设置
+					feature.setProperties(e);
+					feature.setProperties({"type":"BJX"});
+					// 加入要素集合
+					features.push(feature);
+				});
+				if(pointsType.indexOf("WSNB") != -1) pointsAll["WSNB"].forEach((e) => {
+					if((!e["longitude_84"]) || (!e["longitude_84"])) return false;
+					// 自定义要素
+					let feature = new ol.Feature({
+						geometry: new ol.geom.Point([e["longitude_84"],e["latitude_84"]])
+					});
+					// 自定义属性设置
+					feature.setProperties(e);
+					feature.setProperties({"type":"WSNB"});
+					// 加入要素集合
+					features.push(feature);
+				});
+				// 添加要素集合
+				vector_point.getSource().addFeatures(features);
+				
+				// geoJson 添加allNum属性
+				let temp_townPoints = acUtil.geoJsonClone(geoJsonData_town_point);
+				temp_townPoints.features.forEach((e) => {
+					e.properties["allNum"] = town_point.getSource().clear();
+					if((pointsType.indexOf("BJX") != -1) && pointsAll["BJX_ALL"][e.properties["name"]]) e.properties["allNum"] = (pointsAll["BJX_ALL"][e.properties["name"]]) + "";
+					if((pointsType.indexOf("WSNB") != -1) && pointsAll["WSNB_ALL"][e.properties["name"]]) e.properties["allNum"] = (e.properties["allNum"]) ? ((parseInt(e.properties["allNum"]) + pointsAll["WSNB_ALL"][e.properties["name"]]) + "") : (pointsAll["WSNB_ALL"][e.properties["name"]]+"");
+				});
+				if(!pointsType.length) return;
+				let townPointsFeature = new ol.format.GeoJSON().readFeatures(temp_townPoints, {featureProjection: 'EPSG:4326'});
+				town_point.getSource().addFeatures(townPointsFeature);	
+			}
+			/**
+			 * 打开气泡弹窗
+			 * @param {Object} info
+			 * @param {Array.<number>} lonlat
+			 */
+			function openPopupByInfo(info,lonlat){
+				let name = ((info["corporate_name"] || info["suppliers_name"]) || "暂无名称");
+				// html
+				let pHtml =  '<span class="text">'+name+'</span>';
+				// 清空div子元素
+				$("#infoWindow").empty();
+				$("#infoWindow").append(pHtml);
+				// 定位显示
+				overLayer.setPosition(lonlat);
+			}
+			/**
+			 * 关闭气泡弹窗
+			 */
+			function closePopup(){
+				// 弹窗气泡
+				if(overLayer) overLayer.setPosition(undefined);
+			}
+			/**
+			 * 创建叠加图层
+			 * @param {Object} element
+			 */
+			function addPopupByElement(element){
+				if(acolLayer.getOverlayById("infoWindow")) acolLayer.removeOverlayById("infoWindow");
+				// 添加overLayer图层
+				overLayer = acolLayer.overLayer({id:"infoWindow",element:element,offset:[10,-60],positioning:"top-left"});
+				acMap.map.addOverlay(overLayer);
+			}
+			/**
+			 * 加载天地图图层
+			 */
+			function addTDTLayer(type){
+				let tdt_layer = acolLayer.tdtLayer({"name":"tdt_layer","type":type,"sourceType":"XYZ","isLabel":false,"zIndex":0});
+				let tdt_label = acolLayer.tdtLayer({"name":"tdt_label","type":type,"sourceType":"XYZ","isLabel":true,"zIndex":0});
+				// 天地图掩膜，掩膜最上层图层即可
+				acolLayer.tdtLayerMaskByGeoJson({layer:tdt_label,data:geoJsonData_county});
+				acMap.addLayers([tdt_layer,tdt_label]);
+			}
+			/**
+			 * 加载矢量背景图层
+			 */
+			function addBackgroundLayer(){
+				// 矢量偏移
+				let res_data = acUtil.geoJsonTransformTranslate({data:geoJsonData_county,distance:0.5,direction:180});
+				let diff_data = acUtil.differenceByTurf(res_data,geoJsonData_county);
+				
+				let backgroundLayer = acolLayer.vectorLayer({
+					name: "background",
+					type: "polygon",
+					dataOption: {
+						data: diff_data,
+					},
+					style:{
+						fill:{"color":"rgba(30,144,255,0.5)"},
+						stroke:{"color":"rgba(30,144,255,0.5)","width":1}
+					},
+					zIndex:0
+				}); 
+				// 添加图层、要素
+				acMap.addLayers([backgroundLayer]);
+			}
+			/**
+			 * 加载矢量数据图层
+			 */
+			function addVectorLayer(){
+				vector_area = acolLayer.vectorLayer({
+					name: "area",
+					type: "polygon",
+					dataOption: {
+						data: geoJsonData_town,
+					},
+					style:{
+						fill:{},
+						stroke:{"color":"rgba(135,206,250,0.6)","width":2},
+						text:{
+							"field":"name",
+							"fill":{"color":"rgba(255,255,255,1)"},
+							"stroke":{},
+							"font":"20px Calibri",
+						}
+					},
+					zIndex:1
+				}); 
+				
+				// 添加图层、要素
+				acMap.addLayers([vector_area]);
+				// 定位
+				acolLayer.panToByExtent({
+					extent: vector_area.getSource().getExtent(),
+					duration: 1000
+				});
+			}
+
+			/**
+			 * 加载点图层
+			 */
+			function addPointLayer(){
+				vector_point = acolLayer.vectorLayer({
+					name: "vector_point",
+					type: "point",
+					style:{
+						icon: {
+							iconField: "type",
+							iconPREF: "./data/image/",
+							iconSUFF: ".png",
+							anchor: [0.5,0.8],
+							scale: 0.6
+						}
+					},
+					zIndex: 1,
+					visible: false
+					//minZoom: 14
+				});  
+				town_point = acolLayer.vectorLayer({
+					name: "town_point",
+					type: "point",
+					style:{
+						circle: {
+							radius: 30,
+							fill: {color:"rgba(0,255,255,0.5)"},
+							stroke: {color:"rgba(0,255,255,1)","width":1},
+						},
+						text: {
+							field: "allNum",
+							font: "30px Calibri",
+							fill: {color:"rgba(255,255,255,1)"},
+							stroke: {color:"rgba(255,255,255,1)","width":1},
+						}
+					},
+					zIndex: 2,
+					//maxZoom: 14
+				});  
+				acMap.addLayers([vector_point,town_point]);
+			}	
+			/**
+			 * 定位方法
+			 */
+			function panToByObj(obj){
+				//console.log(obj);
+				
+				let offset = 0.001;
+				if(obj["longitude_84"] && obj["latitude_84"]){
+					// 定位
+					acolLayer.panToByExtent({
+						extent: [
+							obj["longitude_84"] - offset,
+							obj["latitude_84"] - offset,
+							obj["longitude_84"] + offset,
+							obj["latitude_84"] + offset
+						],
+						duration: 1000
+					});
+				}
+			}
+		</script>
+	</body>
+</html>

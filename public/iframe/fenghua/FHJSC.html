@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>FHJSC</title>
+		<!-- WEB -->
+		<script type="text/javascript" src="./plugin/web/jquery/jquery.min.js"></script>
+		<!-- GIS -->
+		<link href="./plugin/gis/openlayers/6.5.0/ol.css" rel="stylesheet">
+		<script type="text/javascript" src="./plugin/gis/openlayers/6.5.0/ol.js"></script>
+		<script type="text/javascript" src="./plugin/gis/turf/5.1.6/turf.min.js"></script>
+		<!-- FNC -->
+		<script type="text/javascript" src="./plugin/gis/acol/acol.min.js"></script>
+		<script type="text/javascript" src="./plugin/js/message.js"></script>
+		<!-- DATA -->
+		<script type="text/javascript" src="./data/geoJson/data.js"></script>
+		<script type="text/javascript" src="./data/geoJson/background.js"></script>
+		<script type="text/javascript" src="./data/geoJson/option.js"></script>
+		<style type="text/css">
+		</style>
+
+	</head>
+	<body style=" margin: 0;overflow: hidden;background-color: transparent;width: 100%;height:100%;position: absolute;top: 0;">
+		
+		<div id="map" style="margin:0 auto;width: 100%;height: 100%; background-color: transparent;border:rgba(255,255,255,0);"></div>
+
+		<script type="text/javascript">
+			// 数据解密
+			const geoJsonData_county = new acol_dea().decodeGeoJson({data:geoJsonData_county1});
+			const geoJsonData_town = new acol_dea().decodeGeoJson({data:geoJsonData_town1});
+			const geoJsonData_WD = new acol_dea().decodeGeoJson({data:geoJsonData_WD1});
+			const geoJsonData_ZD = new acol_dea().decodeGeoJson({data:geoJsonData_ZD1});
+			const geoJsonData_XM = new acol_dea().decodeGeoJson({data:geoJsonData_XM1});
+			const geoJsonData_YC = new acol_dea().decodeGeoJson({data:geoJsonData_YC1});
+			// bg
+			const geoJsonData_BG = new acol_dea().decodeGeoJson({data:geoJsonData_BG1});
+			
+			// 地图map对象
+			let acMap,vector_area,vector_WD,vector_ZD,vector_XM,vector_YC,vector_HL;
+			// 个人名称 , 要素数组
+			let personName = "",paresonFeatures = [];
+			// 图层高亮样式
+			let WDStyle = new ol.style.Style({
+				fill: new ol.style.Fill({"color":'rgba(209,83,255,0.8)'}),
+				stroke: new ol.style.Stroke({"color":'rgba(209,83,255,1)',"width":2}),
+			});
+			let XMStyle = new ol.style.Style({
+				fill: new ol.style.Fill({"color":'rgba(255,226,0,0.8)'}),
+				stroke: new ol.style.Stroke({"color":'rgba(255,226,0,1)',"width":2}),
+			});
+			let ZDStyle = new ol.style.Style({
+				fill: new ol.style.Fill({"color":'rgba(46,240,76,0.8)'}),
+				stroke: new ol.style.Stroke({"color":'rgba(46,240,76,1)',"width":2}),
+			});
+			let YCStyle = new ol.style.Style({
+				fill: new ol.style.Fill({"color":'rgba(237,82,0,0.8)'}),
+				stroke: new ol.style.Stroke({"color":'rgba(237,82,0,1)',"width":2}),
+			});
+			
+			// 图层配置信息
+			let layerOptions = {
+				"WD": {
+					layerName:"晚稻",
+					typeArray:["中浙优1号","中浙优8号","制种","华浙优261","南梗9018","嘉丰优2号","宁81","宁84","宁88","岳林1号","旱稻","杂交制种","杂交稻制种","浙优1253","浙优18","甬优088号","甬优12","甬优15","甬优1538","甬优1540","甬优17","甬优1840号","甬优538","甬优7850","甬优7860","甬优8","甬优9号","矮优73","粳稻","香粳"]
+				},
+				"XM": {
+					layerName:"小麦",
+					typeArray:["制种","扬麦12","扬麦20","扬麦28","金丰2号","金永2号"]
+				},
+				"ZD": {
+					layerName:"早稻",
+					typeArray:["甬仙15","甬仙16","甬籼15","甬籼69","矮优73"]
+				},
+				"YC": {
+					layerName:"油菜",
+					typeArray:["油菜","油菜浙油51","油菜浙油64","油菜秦油二号"]
+				}
+			};
+			
+			init();
+			
+			function init(){
+				//console.log("--- init ---");
+				
+				// acMap对象
+				acMap = new acol_map();
+				acMap.initMap({id:"map",center:[121.4070104625,29.5989980008241],zoom:11,minZoom:10,maxZoom:16,constrainResolution:false});
+				
+				// 加载天地图图层
+				addTDTLayer("img");
+				// 加载背景图层
+				addBackgroundLayer();
+				// 加载行政区划矢量图层
+				addVectorLayer();
+				
+				// 添加要素选择器及常用事件
+				let mapSelect = new ol.interaction.Select();
+				acMap.map.addInteraction(mapSelect);
+				mapSelect.on('select',function(e){
+					// 取消选中要素高亮
+					this.getFeatures().clear();
+					if(!e.selected.length) return;
+					
+					// 获取参数
+					let props = e.selected[0].getProperties();
+					if(props.type === "background") return;
+					// featureInfo消息交互
+					let message = {"key":"featureInfo","value":{"featureInfo":new acol_util().FPconversion(props)}};
+					sendMessage('gisFeatureMessage',message);
+
+					// 添加要素前先清空图层
+					vector_HL.getSource().clear();
+					vector_HL.getSource().addFeatures([e.selected[0].clone()]);
+				});
+				// 注册鼠标单击事件
+				/* acMap.mapEventOn(function(e){
+					// 屏幕坐标点获取要素
+					let features = acMap.map.getFeaturesAtPixel(e.pixel);
+					// 未获取到要素时，执行高亮清空操作
+					if(!features.length){
+						vector_HL.getSource().clear();
+					}
+				},"LEFT_CLICK"); */
+				
+				// 图层渲染
+				changeLayerByOptions();
+				
+				// initInfo消息交互
+				let message = {"key":"initInfo","value":{"initType":true}};
+				sendMessage('gisMapMessage',message);
+			}
+			/**
+			 * 根据区划名称定位
+			 * @param {String} name
+			 */
+			function changeAreaByName(name){
+				if(!name) return;
+				
+				let geoJson_area;
+				if(name === "奉化区"){
+					new acol_layer(acMap.map).panToByExtent({
+						extent: vector_area.getSource().getExtent(),
+						duration: 1000
+					});
+				}else{
+					geoJson_area = new acol_search().getGeoJsonFeaturesByKV(geoJsonData_town,"name",name);
+					new acol_layer(acMap.map).panToByExtent({
+						extent: new acol_util().geoJsonBboxByTurf(geoJson_area),
+						duration: 1000
+					});
+				}
+			}
+			/**
+			 * 取消高亮
+			 * @param {Boolean} type
+			 */
+			function highLight(type){
+				if(!type) vector_HL.getSource().clear();
+			}
+			/**
+			 * 根据人员名称精准修改要素样式
+			 * @param {String} name
+			 */
+			function changeFeaturesByName(name){
+				//console.log("--- changeFeaturesByName ---",name);
+				// 移除单体高亮样式
+				vector_HL.getSource().clear();
+				// 人员信息
+				personName = name;
+				paresonFeatures = [];
+				// 图层渲染
+				changeLayerByOptions();
+				// 根据features extent定位
+				// ！！！要素集合为空时，不执行定位逻辑
+				if(!paresonFeatures.length) return;
+				new acol_layer(acMap.map).panToByExtent({
+					// 加入粮功区extent逻辑
+					extent: new acol_util().geoJsonBboxByTurf(turf.featureCollection(paresonFeatures)),
+					duration: 1000
+				});
+			}
+			/**
+			 * 根据多个参数信息，显示图层
+			 */
+			function changeLayerByOptions(){
+				changeLayerByOption(layerOptions["WD"]);
+				changeLayerByOption(layerOptions["XM"]);
+				changeLayerByOption(layerOptions["ZD"]);
+				changeLayerByOption(layerOptions["YC"]);
+			}
+			/**
+			 * 根据参数信息，显示图层
+			 */
+			function changeLayerByOption({layerName,typeArray}){
+				//console.log(layerName,typeArray);
+				// 赋值
+				layerOptions[layerNameOption[layerName]] = {
+					layerName:layerName,
+					typeArray:typeArray
+				}
+				// clear
+				eval("vector_"+layerNameOption[layerName]).getSource().clear();
+				// geoJosn - features
+				let gj_features = eval("geoJsonData_"+layerNameOption[layerName]).features;
+				let res_features = [];
+				for(let i=0;i<gj_features.length;++i){
+					if(typeArray.indexOf(gj_features[i].properties["pinzhong"]) != -1){
+						res_features.push(gj_features[i]);
+						// 获取指定人员所有feature
+						if(gj_features[i].properties["name"] === personName) paresonFeatures.push(gj_features[i]);
+					}
+				}
+				// ol - features
+				let ol_features = new ol.format.GeoJSON().readFeatures(turf.featureCollection(res_features), {
+					featureProjection: 'EPSG:4326',
+				});
+				// addFeatures
+				eval("vector_"+layerNameOption[layerName]).getSource().addFeatures(ol_features);
+			}
+			/**
+			 * 加载天地图图层
+			 */
+			function addTDTLayer(type){
+				let tdt_layer = new acol_layer(acMap.map).tdtLayer({"name":"tdt_layer","type":type,"sourceType":"XYZ","isLabel":false,"zIndex":0});
+				//let tdt_label = new acol_layer(acMap.map).tdtLayer({"name":"tdt_label","type":type,"sourceType":"XYZ","isLabel":true,"zIndex":0});
+				// 天地图掩膜，掩膜最上层图层即可
+				new acol_layer(acMap.map).tdtLayerMaskByGeoJson({layer:tdt_layer,data:geoJsonData_county});
+				acMap.addLayers([tdt_layer]);
+			}
+			/**
+			 * 加载矢量背景图层
+			 */
+			function addBackgroundLayer(){
+				let backgroundLayer = new acol_layer(acMap.map).vectorLayer({
+					name: "background",
+					type: "polygon",
+					dataOption: {
+						data: geoJsonData_BG,
+					},
+					style:{
+						fill:{"color":"rgba(30,144,255,0.5)"},
+						stroke:{"color":"rgba(30,144,255,0.5)","width":1}
+					},
+					zIndex:0
+				}); 
+				// 添加图层、要素
+				acMap.addLayers([backgroundLayer]);
+			}
+			/**
+			 * 加载矢量数据图层
+			 */
+			function addVectorLayer(){
+				vector_HL = new acol_layer(acMap.map).vectorLayer({
+					name: "HL",
+					type: "polygon",
+					style:{
+						fill:{},
+						stroke:{"color":"rgba(255,0,0,1)","width":3},
+					},
+					zIndex:2
+				});
+				vector_area = new acol_layer(acMap.map).vectorLayer({
+					name: "area",
+					type: "polygon",
+					dataOption: {
+						data: geoJsonData_town,
+					},
+					style:{
+						//fill:{"color":"rgba(30,144,255,0.01)"},
+						fill:{},
+						stroke:{"color":"rgba(135,206,250,0.6)","width":1},
+						text:{
+							"field":"name",
+							"fill":{"color":"rgba(255,255,255,1)"},
+							"stroke":{},
+							"font":"12px Calibri",
+						}
+					},
+					zIndex:2
+				}); 
+				vector_WD = new ol.layer.Vector({
+					name: "WD",
+					type: "polygon",
+					source: new ol.source.Vector({
+						projection: "EPSG:4326",
+					}),
+					style: function(feature){
+						let style_temp = new ol.style.Style({
+							fill: new ol.style.Fill({"color":'rgba('+layerColorOption["WD"][feature.get("pinzhong")]+',0.5)'}),
+							stroke: new ol.style.Stroke({"color":'rgba('+layerColorOption["WD"][feature.get("pinzhong")]+',1)',"width":1}),
+						});
+						return ((feature.get("name") === personName) ? WDStyle :style_temp);
+					},
+					zIndex: 1
+				});
+				vector_XM = new ol.layer.Vector({
+					name: "XM",
+					type: "polygon",
+					source: new ol.source.Vector({
+						projection: "EPSG:4326",
+					}),
+					style: function(feature){
+						let style_temp = new ol.style.Style({
+							fill: new ol.style.Fill({"color":'rgba('+layerColorOption["XM"][feature.get("pinzhong")]+',0.6)'}),
+							stroke: new ol.style.Stroke({"color":'rgba('+layerColorOption["XM"][feature.get("pinzhong")]+',1)',"width":1}),
+						});
+						return ((feature.get("name") === personName) ? XMStyle :style_temp);
+					},
+					zIndex: 1
+				});
+				vector_ZD = new ol.layer.Vector({
+					name: "ZD",
+					type: "polygon",
+					source: new ol.source.Vector({
+						projection: "EPSG:4326",
+					}),
+					style: function(feature){
+						let style_temp = new ol.style.Style({
+							fill: new ol.style.Fill({"color":'rgba('+layerColorOption["ZD"][feature.get("pinzhong")]+',0.6)'}),
+							stroke: new ol.style.Stroke({"color":'rgba('+layerColorOption["ZD"][feature.get("pinzhong")]+',1)',"width":1}),
+						});
+						return ((feature.get("name") === personName) ? ZDStyle :style_temp);
+					},
+					zIndex: 1
+				});
+				vector_YC = new ol.layer.Vector({
+					name: "YC",
+					type: "polygon",
+					source: new ol.source.Vector({
+						projection: "EPSG:4326",
+					}),
+					style: function(feature){
+						let style_temp = new ol.style.Style({
+							fill: new ol.style.Fill({"color":'rgba('+layerColorOption["YC"][feature.get("pinzhong")]+',0.6)'}),
+							stroke: new ol.style.Stroke({"color":'rgba('+layerColorOption["YC"][feature.get("pinzhong")]+',1)',"width":1}),
+						});
+						return ((feature.get("name") === personName) ? YCStyle :style_temp);
+					},
+					zIndex: 1
+				});
+				// 添加图层、要素
+				acMap.addLayers([vector_HL,vector_area,vector_WD,vector_XM,vector_ZD,vector_YC]);
+				// 定位
+				new acol_layer(acMap.map).panToByExtent({
+					extent: vector_area.getSource().getExtent(),
+					duration: 1000
+				});
+			}
+		</script>
+	</body>
+</html>

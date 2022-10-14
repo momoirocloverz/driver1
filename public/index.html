@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" href="/reset.css" type="text/css">
+    <!-- GIS -->
+    <link href="/plugin/gis/openlayers/6.5.0/ol.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/plugin/gis/openlayers/6.5.0/ol.js"></script>
+    <script type="text/javascript" src="/plugin/gis/turf/5.1.6/turf.min.js"></script>
+    <script type="text/javascript" src="/plugin/gis/acol_doc/acol.min.js"></script>
+    <!-- DATA -->
+    <script type="text/javascript" src="/data/geoJson/data.js"></script>
+    <script type="text/javascript" src="/plugin/threejs/index.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+      attribute vec4 position;
+      attribute float scale;
+      uniform mat4 modelViewMatrix;//
+      uniform mat4 projectionMatrix;//
+      void main() {
+        vec4 mvPosition = modelViewMatrix * position;
+        gl_PointSize = scale*1.0 * ( 200.0 / - mvPosition.z );
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+      void main() {
+        if ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.49 ) discard;
+        gl_FragColor = vec4(255,255,255,1);
+      }
+    </script>
+    
+    <title><%= webpackConfig.name %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= webpackConfig.name %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="loading" style="height:100vh;width:100vw;background:#000813;color:#fff;font-size:18px;text-align:center;line-height:100vh;">加载中...</div>
+    <script type="text/javascript">
+      let params = new URLSearchParams(location.search);
+      if(params.get('bg') === 'none') {
+        document.getElementById('loading').style.display = 'none'
+      }
+    </script>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <!-- <script src="../src/assets/js/echartsTheme.js"></script> -->
+    <script src="//api.map.baidu.com/api?v=2.0&ak=LU1CE1EpIWbYDZTehiRFS12edoOhXGE6"></script>
+    <script src="http://www.yanhuangxueyuan.com/js/three-camv3m4.min.js"></script>
+
+    <script type="application/javascript">
+      window.addEventListener('message', function(event) {
+        if( event&&event.data&&event.data.code ){
+          sessionStorage.setItem('qrResponseCode',event.data.code)
+        }
+      })
+    </script>
+  </body>
+</html>

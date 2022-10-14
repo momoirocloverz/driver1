@@ -1,0 +1,1661 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.038825,
+          30.683864
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "大胜村",
+        "lng": 121.038825,
+        "lat": 30.683864,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          7
+        ],
+        "wasteSystemName": "大胜村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.05236,
+          30.672092
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "钱家村",
+        "lng": 121.05236,
+        "lat": 30.672092,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          5
+        ],
+        "wasteSystemName": "钱家村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.058389,
+          30.681064
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "塘桥村",
+        "lng": 121.058389,
+        "lat": 30.681064,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          6
+        ],
+        "wasteSystemName": "塘桥村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.051899,
+          30.710689
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "三北村",
+        "lng": 121.051899,
+        "lat": 30.710689,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          8
+        ],
+        "wasteSystemName": "三北村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.019988,
+          30.653941
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "黄家浜村",
+        "lng": 121.019988,
+        "lat": 30.653941,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          3
+        ],
+        "wasteSystemName": "黄家浜村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.023768,
+          30.659784
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "通界村",
+        "lng": 121.023768,
+        "lat": 30.659784,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          2
+        ],
+        "wasteSystemName": "通界村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.042086,
+          30.654742
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "金家村",
+        "lng": 121.042086,
+        "lat": 30.654742,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          4
+        ],
+        "wasteSystemName": "金家村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.06247,
+          30.656483
+        ]
+      },
+      "properties": {
+        "street": "当湖街道",
+        "village": "虹霓村",
+        "lng": 121.06247,
+        "lat": 30.656483,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          1,
+          1
+        ],
+        "wasteSystemName": "虹霓村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.015985,
+          30.7668
+        ]
+      },
+      "properties": {
+        "street": "钟埭街道",
+        "village": "沈家弄村",
+        "wasteSystemName": "沈家弄村",
+        "lng": 121.015985,
+        "lat": 30.7668,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          2,
+          10
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.055272,
+          30.72948
+        ]
+      },
+      "properties": {
+        "street": "钟埭街道",
+        "village": "大力村",
+        "wasteSystemName": "大力村",
+        "lng": 121.055272,
+        "lat": 30.72948,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          2,
+          12
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.985183,
+          30.764809
+        ]
+      },
+      "properties": {
+        "street": "钟埭街道",
+        "village": "钟埭村",
+        "wasteSystemName": "钟埭村",
+        "lng": 120.985183,
+        "lat": 30.764809,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          2,
+          9
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.977204,
+          30.66097
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "孔家堰村",
+        "wasteSystemName": "孔家堰村",
+        "lng": 120.977204,
+        "lat": 30.66097,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          15
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9713,
+          30.647712
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "野马村",
+        "wasteSystemName": "野马村",
+        "lng": 120.9713,
+        "lat": 30.647712,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          19
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.999434,
+          30.669645
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "严家门村",
+        "wasteSystemName": "严家门村",
+        "lng": 120.999434,
+        "lat": 30.669645,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          14
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.993253,
+          30.680029
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "章桥村",
+        "wasteSystemName": "章桥村",
+        "lng": 120.993253,
+        "lat": 30.680029,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          17
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.982138,
+          30.692397
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "石龙村",
+        "wasteSystemName": "石龙村",
+        "lng": 120.982138,
+        "lat": 30.692397,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          18
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.962817,
+          30.695922
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "九里亭村",
+        "wasteSystemName": "九里亭村",
+        "lng": 120.962817,
+        "lat": 30.695922,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          16
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.992304,
+          30.646897
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "马厩村",
+        "wasteSystemName": "马厩村",
+        "lng": 120.992304,
+        "lat": 30.646897,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          20
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.010298,
+          30.639099
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "百寿村",
+        "wasteSystemName": "百寿村",
+        "lng": 121.010298,
+        "lat": 30.639099,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          21
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.974462,
+          30.675851
+        ]
+      },
+      "properties": {
+        "street": "曹桥街道",
+        "village": "曹桥村",
+        "wasteSystemName": "曹桥村",
+        "lng": 120.974462,
+        "lat": 30.675851,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          3,
+          13
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.095576,
+          30.831014
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "杨庄浜村",
+        "lng": 121.095576,
+        "lat": 30.831014,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          23
+        ],
+        "wasteSystemName": "杨庄浜村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.097448,
+          30.84703
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "泖河村",
+        "lng": 121.097448,
+        "lat": 30.84703,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          22
+        ],
+        "wasteSystemName": "泖河村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.068433,
+          30.831393
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "旧埭村",
+        "lng": 121.068433,
+        "lat": 30.831393,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          26
+        ],
+        "wasteSystemName": "旧埭村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.106452,
+          30.787761
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "鱼圻塘村",
+        "lng": 121.106452,
+        "lat": 30.787761,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          25
+        ],
+        "wasteSystemName": "鱼圻塘村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.106741,
+          30.802703
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "星光村",
+        "lng": 121.106741,
+        "lat": 30.802703,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          27
+        ],
+        "wasteSystemName": "星光村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.125203,
+          30.824946
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "姚浜村",
+        "lng": 121.125203,
+        "lat": 30.824946,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          30
+        ],
+        "wasteSystemName": "姚浜村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.119389,
+          30.830144
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "兴旺村",
+        "lng": 121.119389,
+        "lat": 30.830144,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          29
+        ],
+        "wasteSystemName": "兴旺村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.055987,
+          30.780871
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "大齐塘村",
+        "lng": 121.055987,
+        "lat": 30.780871,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          24
+        ],
+        "wasteSystemName": "大齐塘村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.085769,
+          30.809211
+        ]
+      },
+      "properties": {
+        "street": "新埭镇",
+        "village": "牌楼村",
+        "lng": 121.085769,
+        "lat": 30.809211,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          4,
+          28
+        ],
+        "wasteSystemName": "牌楼村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.20614,
+          30.726027
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "三叉河村",
+        "lng": 121.20614,
+        "lat": 30.726027,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          66
+        ],
+        "wasteSystemName": "三叉河村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.193825,
+          30.715073
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "友联村",
+        "lng": 121.193825,
+        "lat": 30.715073,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          67
+        ],
+        "wasteSystemName": "友联村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.196077,
+          30.732114
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "石路村",
+        "lng": 121.196077,
+        "lat": 30.732114,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          68
+        ],
+        "wasteSystemName": "石路村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.200367,
+          30.738596
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "秦沙村",
+        "lng": 121.200367,
+        "lat": 30.738596,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          69
+        ],
+        "wasteSystemName": "秦沙村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.213478,
+          30.740254
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "双红村",
+        "lng": 121.213478,
+        "lat": 30.740254,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          70
+        ],
+        "wasteSystemName": "双红村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.223795,
+          30.760931
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "芦湾村",
+        "lng": 121.223795,
+        "lat": 30.760931,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          72
+        ],
+        "wasteSystemName": "芦湾村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.210802,
+          30.784305
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "杉青港村",
+        "lng": 121.210802,
+        "lat": 30.784305,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          73
+        ],
+        "wasteSystemName": "杉青港村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.210497,
+          30.760481
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "中华村",
+        "lng": 121.210497,
+        "lat": 30.760481,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          8,
+          71
+        ],
+        "wasteSystemName": "中华村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.150169,
+          30.717011
+        ]
+      },
+      "properties": {
+        "street": "新仓镇",
+        "village": "赵家桥村",
+        "lng": 121.150169,
+        "lat": 30.717011,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          35
+        ],
+        "wasteSystemName": "赵家桥村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.073565,
+          30.776824
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "曹港村",
+        "lng": 121.073565,
+        "lat": 30.776824,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          49
+        ],
+        "wasteSystemName": "曹港村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.070745,
+          30.751993
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "民主村",
+        "lng": 121.070745,
+        "lat": 30.751993,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          51
+        ],
+        "wasteSystemName": "民主村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.099795,
+          30.744261
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "三红村",
+        "lng": 121.099795,
+        "lat": 30.744261,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          46
+        ],
+        "wasteSystemName": "三红村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.087397,
+          30.759264
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "前港村",
+        "lng": 121.087397,
+        "lat": 30.759264,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          50
+        ],
+        "wasteSystemName": "前港村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.106694,
+          30.756133
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "高新村",
+        "lng": 121.106694,
+        "lat": 30.756133,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          53
+        ],
+        "wasteSystemName": "高新村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.143167,
+          30.758786
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "港中村",
+        "lng": 121.143167,
+        "lat": 30.758786,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          44
+        ],
+        "wasteSystemName": "港中村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.127111,
+          30.739095
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "龙兴村",
+        "lng": 121.127111,
+        "lat": 30.739095,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          52
+        ],
+        "wasteSystemName": "龙兴村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.144952,
+          30.73651
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "三兴村",
+        "lng": 121.144952,
+        "lat": 30.73651,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          54
+        ],
+        "wasteSystemName": "三兴村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.162576,
+          30.757304
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "泗泾村",
+        "lng": 121.162576,
+        "lat": 30.757304,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          48
+        ],
+        "wasteSystemName": "泗泾村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.164829,
+          30.77421
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "山塘村",
+        "lng": 121.164829,
+        "lat": 30.77421,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          45
+        ],
+        "wasteSystemName": "山塘村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.139932,
+          30.775673
+        ]
+      },
+      "properties": {
+        "street": "广陈镇",
+        "village": "龙萌村",
+        "lng": 121.139932,
+        "lat": 30.775673,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          6,
+          47
+        ],
+        "wasteSystemName": "龙萌村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.255073,
+          30.736965
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "穗轮村",
+        "lng": 121.255073,
+        "lat": 30.736965,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          37
+        ],
+        "wasteSystemName": "穗轮村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.240992,
+          30.727897
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "衙前村",
+        "lng": 121.240992,
+        "lat": 30.727897,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          39
+        ],
+        "wasteSystemName": "衙前村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.232006,
+          30.692572
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "前进村",
+        "lng": 121.232006,
+        "lat": 30.692572,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          40
+        ],
+        "wasteSystemName": "前进村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.217561,
+          30.688026
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "优胜村",
+        "lng": 121.217561,
+        "lat": 30.688026,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          32
+        ],
+        "wasteSystemName": "优胜村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.195655,
+          30.665408
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "小营头村",
+        "lng": 121.195655,
+        "lat": 30.665408,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          34
+        ],
+        "wasteSystemName": "小营头村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.171024,
+          30.671154
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "虎啸村",
+        "lng": 121.171024,
+        "lat": 30.671154,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          31
+        ],
+        "wasteSystemName": "虎啸村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.170382,
+          30.649476
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "海塘村",
+        "lng": 121.170382,
+        "lat": 30.649476,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          38
+        ],
+        "wasteSystemName": "海塘村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.163659,
+          30.673999
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "聚福村",
+        "lng": 121.163659,
+        "lat": 30.673999,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          33
+        ],
+        "wasteSystemName": "聚福村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.136108,
+          30.692617
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "韩家庙村",
+        "lng": 121.136108,
+        "lat": 30.692617,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          42
+        ],
+        "wasteSystemName": "韩家庙村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.109496,
+          30.72413
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "周家圩村",
+        "lng": 121.109496,
+        "lat": 30.72413,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          43
+        ],
+        "wasteSystemName": "周家圩村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.259703,
+          30.717057
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "金沙村",
+        "lng": 121.259703,
+        "lat": 30.717057,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          41
+        ],
+        "wasteSystemName": "金沙村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.153189,
+          30.657846
+        ]
+      },
+      "properties": {
+        "street": "独山港镇",
+        "village": "渡船桥村",
+        "lng": 121.153189,
+        "lat": 30.657846,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          5,
+          36
+        ],
+        "wasteSystemName": "渡船桥村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.120873,
+          30.672893
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "陈匠村",
+        "lng": 121.120873,
+        "lat": 30.672893,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          57
+        ],
+        "wasteSystemName": "陈匠村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.11196,
+          30.660785
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "共和村",
+        "lng": 121.11196,
+        "lat": 30.660785,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          59
+        ],
+        "wasteSystemName": "共和村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.121761,
+          30.659253
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "群丰村",
+        "lng": 121.121761,
+        "lat": 30.659253,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          56
+        ],
+        "wasteSystemName": "群丰村"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.099989,
+          30.658586
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "保丰村",
+        "wasteSystemName": "保丰村",
+        "lng": 121.099989,
+        "lat": 30.658586,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          58
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.086953,
+          30.656844
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "新庄村",
+        "wasteSystemName": "新庄村",
+        "lng": 121.086953,
+        "lat": 30.656844,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          61
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.10051,
+          30.66759
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "东方红村",
+        "wasteSystemName": "东方红村",
+        "lng": 121.10051,
+        "lat": 30.66759,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          60
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.083579,
+          30.690937
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "徐家埭村",
+        "wasteSystemName": "徐家埭村",
+        "lng": 121.083579,
+        "lat": 30.690937,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          63
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.071561,
+          30.711315
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "双庙村",
+        "wasteSystemName": "双庙村",
+        "lng": 121.071561,
+        "lat": 30.711315,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          64
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.091089,
+          30.711058
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "祥中村",
+        "wasteSystemName": "祥中村",
+        "lng": 121.091089,
+        "lat": 30.711058,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          62
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.100889,
+          30.70835
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "华丰村",
+        "wasteSystemName": "华丰村",
+        "lng": 121.100889,
+        "lat": 30.70835,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          55
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.100091,
+          30.695891
+        ]
+      },
+      "properties": {
+        "street": "林埭镇",
+        "village": "徐东村",
+        "wasteSystemName": "徐东村",
+        "lng": 121.100091,
+        "lat": 30.695891,
+        "type": "已推广村",
+        "value": 1,
+        "ids": [
+          7,
+          65
+        ]
+      }
+    }
+  ]
+}

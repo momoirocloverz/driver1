@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>奉化驾驶舱 - iframe</title>
+	<!-- WEB -->
+	<script type="text/javascript" src="./plugin/web/jquery/jquery.min.js"></script>
+	<link href="./plugin/web/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="./plugin/web/bootstrap/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		#toolbar {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			width: 500px;
+			text-align: center;
+			z-index: 99999;
+			border-radius: 4px;
+		}
+		#toolbar1 {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			width: 260px;
+			text-align: center;
+			z-index: 9999;
+			border-radius: 4px;
+		}
+	</style>
+    <script type="text/javascript">
+		if (window.addEventListener) {
+		    //为window注册message事件并绑定监听函数
+		    window.addEventListener('message', receiveMsg, false);
+		}else {
+		    window.attachEvent('message', receiveMsg);
+		}
+		//监听函数，接收一个参数--Event事件对象
+		function receiveMsg(e) {
+			let obj = e.data;
+		    // 地图交互消息监听
+		    if(obj.type == "gisMapMessage"){
+		    	if(obj.data.key == "initInfo" && obj.data.value){
+					// initType为true时，map初始化成功
+		    		console.log("initInfo交互---地图加载完成",obj.data.value.initType);
+		    	}
+		    }
+			// 要素消息交互
+			if(obj.type == "gisFeatureMessage"){
+				if(obj.data.key == "featureInfo" && obj.data.value){
+					console.log("featureInfo交互---要素消息交互",obj.data.value.featureInfo);
+				}
+			}
+		}
+		
+		// 发送消息
+		function sendMessage(type,data){
+			// 向子页面传递消息
+			let iframe = document.getElementById("gisIframe");
+			iframe.contentWindow.postMessage({type: type, data: data},'*');
+		}
+	</script>
+    
+</head>
+<body style="margin:0;overflow:hidden;width:100%;height:100%;position:absolute;top:0;background-color:transparent;">
+<div class="alert alert-danger alert-dismissable" style="position: absolute;width: 40%;left: 30%;top: 20%;">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+		&times;
+	</button>
+	！！！注意：<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1.单击地块，默认红色高亮效果。为配合弹窗展示，点击地图空白区域不会取消高亮效果，可关联弹窗关闭/移除事件，通过消息交互取消单体高亮。<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;2.单击地块，子页面默认仅返回当前地块所有属性信息。前端可通过"name"字段，查询该种植户所有种植信息用于关联弹窗中展示使用。<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;3.种植户搜索，前端列表可做模糊查询处理，但最终需选择准确的种植户名称，用于消息交互使用。<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;！！！4.种植户搜索，需考虑当前图层配置下，该种植户所属地块状态为显示/隐藏。GIS处理逻辑：基于当前图层配置，查询用户所属地块信息，存在则定位高亮，不存在则地图无变化。<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;！！！5.种植户搜索，搜索栏每次清空操作，也需进行消息交互。<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;6.图层图例操作，参考示例方法即可，示例中包含四类图层数据中全部品种信息。<br />
+</div>
+<div id="toolbar" class="panel panel-primary">
+	<div class='panel-heading'>
+			<h5 class='panel-title text-center'></h5>功能交互</div>
+		<div class='panel-body content'>
+			<input type="button" class="btn btn-default" onclick="changeFeaturesByName('汪良平')" value="汪良平"/>
+			<input type="button" class="btn btn-default" onclick="changeFeaturesByName('')" value="搜索清空"/>
+			<input type="button" class="btn btn-default" onclick="layerTest(1)" value="晚稻全选"/>
+			<input type="button" class="btn btn-default" onclick="layerTest(0)" value="晚稻全空"/>
+			<input type="button" class="btn btn-default" onclick="highLight()" value="取消单体高亮"/>
+		</div>
+	</div>
+</div>
+<div id="toolbar1" class="panel panel-primary">
+	<div class='panel-heading'>
+		<h5 class='panel-title text-center'></h5>行政区划</div>
+	<div class='panel-body content'>
+		<div class='panel'>
+			<div class='input-group'>
+				<span class='input-group-addon'>名称</span>
+				<select id='areaSelect' class='form-control'>
+					<option value="奉化区">奉化区</option>
+					<option value="锦屏街道">锦屏街道</option>
+					<option value="岳林街道">岳林街道</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+<iframe id="gisIframe" src="./FHJSC.html" style="width:100%;height:100%;background-color:transparent;border:rgba(255,255,255,0);"></iframe> 
+	<script>
+		// 行政区划数据
+		let areaObj = {"county":{"name":"奉化区","children":[{"name":"锦屏街道"},{"name":"岳林街道"},{"name":"江口街道"},{"name":"西坞街道"},{"name":"萧王庙街道"},{"name":"方桥街道"},{"name":"溪口镇"},{"name":"尚田街道"},{"name":"莼湖街道"},{"name":"裘村镇"},{"name":"大堰镇"},{"name":"松岙镇"}]}}
+		// 四类图层全部种类配置信息
+		let layerOptions = {
+			"WD": {
+				layerName:"晚稻",
+				typeArray:["中浙优1号","中浙优8号","制种","华浙优261","南梗9018","嘉丰优2号","宁81","宁84","宁88","岳林1号","旱稻","杂交制种","杂交稻制种","浙优1253","浙优18","甬优088号","甬优12","甬优15","甬优1538","甬优1540","甬优17","甬优1840号","甬优538","甬优7850","甬优7860","甬优8","甬优9号","矮优73","粳稻","香粳"]
+			},
+			"XM": {
+				layerName:"小麦",
+				typeArray:["制种","扬麦12","扬麦20","扬麦28","金丰2号","金永2号"]
+			},
+			"ZD": {
+				layerName:"早稻",
+				typeArray:["甬仙15","甬仙16","甬籼15","甬籼69","矮优73"]
+			},
+			"YC": {
+				layerName:"油菜",
+				typeArray:["油菜","油菜浙油51","油菜浙油64","油菜秦油二号"]
+			}
+		};
+		function layerTest(num){
+			if(num){
+				changeLayerByOption(layerOptions["WD"]);
+			}else{
+				changeLayerByOption({
+					layerName:"晚稻",
+					typeArray:[]
+				});
+			}
+		}
+		
+		// 下拉框交互
+		$("#areaSelect").change(function(){
+			changeAreaByName($("#areaSelect").val());
+		});
+		
+		// 交互方法
+		/**
+		 * 根据人员名称精准修改要素样式
+		 * @param {String} name --> "卓和达"，无值传 ""
+		 */
+		function changeFeaturesByName(name){
+			let message = {"key":"changeFeaturesByName","value":{"name":name}};
+			sendMessage('gisLayerMessage',message);
+		}
+		/**
+		 * 根据配置信息修改图层
+		 * @option {Object} option 配置信息对象
+		 * @param {String} option.layerName --> 图层名称：晚稻、小麦、早稻、油菜
+		 * @param {Array.<String>} option.typeArray --> 类型数组：["中浙优1号","中浙优8号","制种","华浙优261","南梗9018",......]，无值传 []
+		 */
+		function changeLayerByOption({layerName,typeArray}){
+			console.log(layerName,typeArray);
+			
+			let message = {"key":"changeLayerByOption","value":{"option":{layerName,typeArray}}};
+			sendMessage('gisLayerMessage',message);
+		}
+		/**
+		 * 取消高亮
+		 */
+		function highLight(){
+			let message = {"key":"highLight","value":{"highLight":false}};
+			sendMessage('gisLayerMessage',message);
+		}
+		/**
+		 * 根据区划名称定位
+		 * @param {String} name
+		 */
+		function changeAreaByName(name){
+			let message = {"key":"changeAreaByName","value":{"name":name}};
+			sendMessage('gisLayerMessage',message);
+		}
+	</script>
+</html>
